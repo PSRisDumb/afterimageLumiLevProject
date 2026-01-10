@@ -91,7 +91,6 @@ public class CameraMoveAround : MonoBehaviour
                 rb.velocity = new Vector3(rb.velocity.x / 2, rb.velocity.y, rb.velocity.z / 2);
             }
         }
-
         //  Flashlight
 
         var lookAtPos = Input.mousePosition;
