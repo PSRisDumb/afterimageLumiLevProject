@@ -567,7 +567,7 @@ Transform:
   m_GameObject: {fileID: 641445449}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -42.92, y: 11.6673, z: -1.2}
+  m_LocalPosition: {x: -44, y: 11.6673, z: -1.2}
   m_LocalScale: {x: 88.866615, y: 21.535608, z: 0.9052169}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1264,7 +1264,10 @@ MonoBehaviour:
   CamList: []
   rb: {fileID: 1737786357}
   speed: 500
+  Jumppower: 600
+  deceleration: 0
   CamPos: 0
+  Jumped: 0
   Flashlight: {fileID: 837345141}
 --- !u!136 &1737786353
 CapsuleCollider:
@@ -1496,7 +1499,7 @@ GameObject:
   - component: {fileID: 2080949989}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

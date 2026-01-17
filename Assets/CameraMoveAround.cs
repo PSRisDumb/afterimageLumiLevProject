@@ -19,7 +19,11 @@ public class CameraMoveAround : MonoBehaviour
     public Rigidbody rb; //Player
 
     public int speed; //Speed of player
+    public float Jumppower;
+    public float deceleration;
     public int CamPos; //Interger to itterate through Cam List with
+
+    [SerializeField] private bool Jumped;
 
     public GameObject Flashlight;
     void Start()
@@ -83,12 +87,16 @@ public class CameraMoveAround : MonoBehaviour
                 rb.AddForce(Cam.transform.right * speed * Time.deltaTime);
             }
             if (Input.GetKey(KeyCode.A))
-            {
-                rb.AddForce(Cam.transform.right * -1 * speed * Time.deltaTime);
+            {                rb.AddForce(Cam.transform.right * -1 * speed * Time.deltaTime);
             }
             if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
             {
-                rb.velocity = new Vector3(rb.velocity.x / 2, rb.velocity.y, rb.velocity.z / 2);
+                rb.velocity = new Vector3(rb.velocity.x / deceleration, rb.velocity.y, rb.velocity.z / deceleration);
+            }
+            if (Input.GetKey(KeyCode.Space) && Jumped)
+            {
+                GetComponent<Rigidbody>().AddForce(0,Jumppower,0);
+                Jumped = false;
             }
         }
         //  Flashlight
@@ -142,6 +150,14 @@ public class CameraMoveAround : MonoBehaviour
                 }
                 Last = "Eastern";
                 break;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Jumped = true;
         }
     }
 }
