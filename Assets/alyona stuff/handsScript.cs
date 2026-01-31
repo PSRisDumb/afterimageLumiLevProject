@@ -22,6 +22,7 @@ public class handsScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //hand movement
         hand.anchoredPosition = Vector2.MoveTowards(hand.anchoredPosition, targetPos, speed * Time.deltaTime);
 
         if(hand.anchoredPosition == targetPos)
@@ -29,10 +30,13 @@ public class handsScript : MonoBehaviour
             sanityDrainT += Time.deltaTime;
             if(sanityDrainT >= sanityDrain)
             {
+                //sanity drain when hit middle
                 Debug.Log("hit middle");
                 sanityScr.GetComponent<sanityManager>().sanity -= 10;
                 sanityDrainT = 0;
             }
+
+            
  
         }
 
