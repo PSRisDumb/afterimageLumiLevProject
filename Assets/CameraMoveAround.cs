@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraMoveAround : MonoBehaviour
 {
+    public GameObject CamerasHolder; //Parent of Camera AND positions
+
     public GameObject One; // GameObject which holds the position that the camera should go to
     public GameObject two; // different one
     public GameObject three; // diff
@@ -11,7 +13,7 @@ public class CameraMoveAround : MonoBehaviour
     public GameObject Cam; // The Camera
 
     public Material seeThrough;
-    private string Last ="Southern";
+    private string Last = "Southern";
     public Material Base;
 
     public List<GameObject> CamList; // List of all cams
@@ -19,14 +21,25 @@ public class CameraMoveAround : MonoBehaviour
     public Rigidbody rb; //Player
 
     public int speed; //Speed of player
+    public float Jumppower;
+    public float deceleration;
     public int CamPos; //Interger to itterate through Cam List with
 
+    public GameObject HeldObject;
+    public bool HoldingObjectBool;
+    public GameObject itemHolder;
+    public bool NuhUhDrop;
+
+    [SerializeField] private bool Jumped;
+
     public GameObject Flashlight;
+
+    public float ThrowPower;
     void Start()
     {
         Application.targetFrameRate = 60;
         //Add the cams to CamList
-        CamList.Add(One); 
+        CamList.Add(One);
         CamList.Add(two);
         CamList.Add(three);
         CamList.Add(four);
@@ -34,12 +47,13 @@ public class CameraMoveAround : MonoBehaviour
     }
     void Update()
     {
+        CamerasHolder.transform.position = transform.position;
 
         //Camera E / Q
 
         if (Input.GetKeyDown(KeyCode.E)) // When the player presses E
         {
-            if (CamPos == CamList.Count-1) // If is at max
+            if (CamPos == CamList.Count - 1) // If is at max
             {
                 Debug.Log("Back to 0"); // log it
                 CamPos = 0;  // CamPos is reset to 0
@@ -56,7 +70,7 @@ public class CameraMoveAround : MonoBehaviour
         {
             if (CamPos == 0)
             {
-                CamPos = CamList.Count-1;
+                CamPos = CamList.Count - 1;
             }
             else
             {
@@ -66,31 +80,40 @@ public class CameraMoveAround : MonoBehaviour
             Cam.transform.rotation = CamList[CamPos].transform.rotation;
             MakeInTheWayObjectsSeeThrough();
         }
-        
+
         //Movement
-        if (rb.velocity.x < 10)
+        if (Input.GetKey(KeyCode.W))
         {
-            if (Input.GetKey(KeyCode.W))
-            {
-                rb.AddForce(Cam.transform.forward * speed * Time.deltaTime);
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                rb.AddForce(Cam.transform.forward * -1 * speed * Time.deltaTime);
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                rb.AddForce(Cam.transform.right * speed * Time.deltaTime);
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                rb.AddForce(Cam.transform.right * -1 * speed * Time.deltaTime);
-            }
-            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
-            {
-                rb.velocity = new Vector3(rb.velocity.x / 2, rb.velocity.y, rb.velocity.z / 2);
-            }
+            rb.AddForce(Cam.transform.forward * speed * Time.deltaTime);
+            transform.eulerAngles = new Vector2(0, 180);
         }
+        if (Input.GetKey(KeyCode.S))
+        {
+            rb.AddForce(Cam.transform.forward * -1 * speed * Time.deltaTime);
+            transform.eulerAngles = new Vector2(0, 0);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            rb.AddForce(Cam.transform.right * speed * Time.deltaTime);
+            transform.eulerAngles = new Vector2(0, 90);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            rb.AddForce(Cam.transform.right * -1 * speed * Time.deltaTime);
+            transform.eulerAngles = new Vector2(0, 270);
+        }
+        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
+        {
+            rb.velocity = new Vector3(rb.velocity.x / deceleration, rb.velocity.y, rb.velocity.z / deceleration);
+        }
+        if (Input.GetKey(KeyCode.Space) && Jumped)
+        {
+            GetComponent<Rigidbody>().AddForce(0, Jumppower, 0);
+            Jumped = false;
+        }
+        GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity.normalized;
+        Vector3.ClampMagnitude(rb.velocity, 10);
+
         //  Flashlight
 
         var lookAtPos = Input.mousePosition;
@@ -99,6 +122,27 @@ public class CameraMoveAround : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             Flashlight.transform.LookAt(hit.point);
+
+            //Throwing Thingys
+            if (HoldingObjectBool && !NuhUhDrop)
+            {
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    HoldingObjectBool = false;
+                    HeldObject.transform.parent = null;
+                    HeldObject.transform.LookAt(hit.point);
+                    HeldObject.GetComponent<Rigidbody>().AddForce(HeldObject.transform.forward*ThrowPower, ForceMode.Impulse);
+                    HeldObject.GetComponent<PickUpableObject>().Mc.enabled = true;
+                    HeldObject = null;
+                }
+            }
+        }
+
+        //Pick up Thingys
+        if (HoldingObjectBool)
+        {
+            HeldObject.transform.position = itemHolder.transform.position;
+            HeldObject.transform.parent = itemHolder.transform;
         }
     }
     void MakeInTheWayObjectsSeeThrough() //Makes unimportant walls invisiible/see through
@@ -130,7 +174,7 @@ public class CameraMoveAround : MonoBehaviour
                 foreach (GameObject thing in GameObject.FindGameObjectsWithTag("Northern"))
                 {
                     var objectRenderer = thing.GetComponent<Renderer>();
-                    objectRenderer.material = seeThrough;;
+                    objectRenderer.material = seeThrough; ;
                 }
                 Last = "Northern";
                 break;
@@ -143,5 +187,19 @@ public class CameraMoveAround : MonoBehaviour
                 Last = "Eastern";
                 break;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Jumped = true;
+        }
+    }
+
+    public IEnumerator WaitOneSecTillAllowDrop()
+    {
+         yield return new WaitForSeconds(1);
+        NuhUhDrop = false;
     }
 }
