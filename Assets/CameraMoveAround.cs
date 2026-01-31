@@ -102,17 +102,17 @@ public class CameraMoveAround : MonoBehaviour
             rb.MovePosition(rb.position + Cam.transform.right * -1 * speed * Time.deltaTime);
             transform.eulerAngles = new Vector2(0, 270);
         }
-        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
-        {
-            rb.velocity = new Vector3(rb.velocity.x / deceleration, rb.velocity.y, rb.velocity.z / deceleration);
-        }
+        //if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
+        //{
+        //    rb.velocity = new Vector3(rb.velocity.x / deceleration, rb.velocity.y, rb.velocity.z / deceleration);
+        //}
         if (Input.GetKey(KeyCode.Space) && Jumped)
         {
-            GetComponent<Rigidbody>().AddForce(0, Jumppower, 0);
+            GetComponent<Rigidbody>().AddForce(Vector3.up * Jumppower, ForceMode.Impulse);
             Jumped = false;
         }
-        GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity.normalized;
-        Vector3.ClampMagnitude(rb.velocity, 10);
+       // GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity.normalized;
+        //Vector3.ClampMagnitude(rb.velocity, 10);
 
         //  Flashlight
 
