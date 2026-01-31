@@ -1650,7 +1650,7 @@ MonoBehaviour:
   Base: {fileID: 2100000, guid: c261616f6d51f9c4bbee9a6e39aa96cc, type: 2}
   CamList: []
   rb: {fileID: 1737786357}
-  speed: 500
+  speed: 400
   Jumppower: 600
   deceleration: 3
   CamPos: 0
@@ -1660,7 +1660,7 @@ MonoBehaviour:
   NuhUhDrop: 0
   Jumped: 1
   Flashlight: {fileID: 837345141}
-  ThrowPower: 1000
+  ThrowPower: 40
 --- !u!136 &1737786353
 CapsuleCollider:
   m_ObjectHideFlags: 0

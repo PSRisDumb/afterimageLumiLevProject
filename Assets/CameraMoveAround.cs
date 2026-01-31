@@ -111,6 +111,7 @@ public class CameraMoveAround : MonoBehaviour
             GetComponent<Rigidbody>().AddForce(0, Jumppower, 0);
             Jumped = false;
         }
+        GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity.normalized;
         Vector3.ClampMagnitude(rb.velocity, 10);
 
         //  Flashlight
