@@ -84,22 +84,22 @@ public class CameraMoveAround : MonoBehaviour
         //Movement
         if (Input.GetKey(KeyCode.W))
         {
-            rb.AddForce(Cam.transform.forward * speed * Time.deltaTime);
+            rb.MovePosition(rb.position+Cam.transform.forward * speed * Time.deltaTime);
             transform.eulerAngles = new Vector2(0, 180);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            rb.AddForce(Cam.transform.forward * -1 * speed * Time.deltaTime);
+            rb.MovePosition(rb.position + Cam.transform.forward * -1 * speed * Time.deltaTime);
             transform.eulerAngles = new Vector2(0, 0);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            rb.AddForce(Cam.transform.right * speed * Time.deltaTime);
+            rb.MovePosition(rb.position + Cam.transform.right * speed * Time.deltaTime);
             transform.eulerAngles = new Vector2(0, 90);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            rb.AddForce(Cam.transform.right * -1 * speed * Time.deltaTime);
+            rb.MovePosition(rb.position + Cam.transform.right * -1 * speed * Time.deltaTime);
             transform.eulerAngles = new Vector2(0, 270);
         }
         if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
