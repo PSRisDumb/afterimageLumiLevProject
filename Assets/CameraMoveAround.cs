@@ -22,15 +22,12 @@ public class CameraMoveAround : MonoBehaviour
 
     public int speed; //Speed of player
     public float Jumppower;
-    public float deceleration;
     public int CamPos; //Interger to itterate through Cam List with
 
     public GameObject HeldObject;
     public bool HoldingObjectBool;
     public GameObject itemHolder;
     public bool NuhUhDrop;
-
-    [SerializeField] private bool Jumped;
 
     public GameObject Flashlight;
 
@@ -102,17 +99,12 @@ public class CameraMoveAround : MonoBehaviour
             rb.MovePosition(rb.position + Cam.transform.right * -1 * speed * Time.deltaTime);
             transform.eulerAngles = new Vector2(0, 270);
         }
-        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.Space) && CanJump())
         {
-            rb.velocity = new Vector3(rb.velocity.x / deceleration, rb.velocity.y, rb.velocity.z / deceleration);
+            Debug.Log("Hit");
+            GetComponent<Rigidbody>().AddForce(0, Jumppower, 0,ForceMode.Impulse);
         }
-        if (Input.GetKey(KeyCode.Space) && Jumped)
-        {
-            GetComponent<Rigidbody>().AddForce(0, Jumppower, 0);
-            Jumped = false;
-        }
-        GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity.normalized;
-        Vector3.ClampMagnitude(rb.velocity, 10);
+        Debug.Log(rb.velocity);
 
         //  Flashlight
 
@@ -189,12 +181,20 @@ public class CameraMoveAround : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+    bool CanJump()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+            Vector3 origin = transform.position + Vector3.down * 1f;
+            float radius = 0.5f;
+        RaycastHit[] hits = Physics.SphereCastAll(origin, radius, Vector3.forward, 1);
+        foreach (RaycastHit hit in hits)
         {
-            Jumped = true;
+            if (hit.transform.gameObject.CompareTag("Ground"))
+            {
+                return true;
+            }
         }
+        return false;
     }
 
     public IEnumerator WaitOneSecTillAllowDrop()
