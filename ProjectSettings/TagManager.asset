@@ -9,14 +9,15 @@ TagManager:
   - Eastern
   - Southern
   - Ground
+  - Item
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
+  - Items
   - 
   - 
   - 
