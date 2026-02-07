@@ -545,12 +545,19 @@ MonoBehaviour:
   enemyCanvas: {fileID: 1124004200}
   handSpawn: 5
   handsChance: 100
-  handsPrefab: {fileID: 6385922283955121319, guid: c52b928c173450d468bc1ef279a09794, type: 3}
+  handsPrefab: {fileID: 1451433581831998785, guid: c52b928c173450d468bc1ef279a09794, type: 3}
+  handsPrefabs:
+  - {fileID: 7702818459469516069, guid: 2c2fa9e2b33f0b24c9397585bf0d9fac, type: 3}
+  - {fileID: 4759284970782686932, guid: 60624b6ca8542e842ac71755f825e662, type: 3}
+  - {fileID: 4759284970782686932, guid: 60624b6ca8542e842ac71755f825e662, type: 3}
+  - {fileID: 8101574749767500028, guid: 507d7de504cfcd04085f671d7bac7075, type: 3}
+  photoSpawn: 5
+  photoChance: 0
   photos:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 4777120342673320745, guid: 6677f0eec745c6c4dbbea2a149951eb2, type: 3}
+  - {fileID: 7525417242264057365, guid: 3e35875c2ba13e24697bb83c31aff383, type: 3}
+  - {fileID: 437806317825877330, guid: 3ea43b7d98763114bb16c7e621c5f62c, type: 3}
+  - {fileID: 8883866915595478175, guid: bc0fac5e2195c374ebd23e08e0829fd2, type: 3}
 --- !u!4 &520223074
 Transform:
   m_ObjectHideFlags: 0
