@@ -20,8 +20,6 @@ public class photoScript : MonoBehaviour
         sanityDrainT += Time.deltaTime;
         if (sanityDrainT >= sanityDrain)
         {
-            //sanity drain when hit middle
-            Debug.Log("hit middle");
             sanityScr.GetComponent<sanityManager>().sanity -= 10;
             sanityDrainT = 0;
         }
