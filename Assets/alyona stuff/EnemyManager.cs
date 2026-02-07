@@ -10,7 +10,6 @@ public class EnemyManager : MonoBehaviour
     private float handTimer;
     public float handSpawn;
     public int handsChance;
-    public GameObject handsPrefab;
     public List<GameObject> handsPrefabs;
 
     private float photoTimer;
@@ -36,7 +35,6 @@ public class EnemyManager : MonoBehaviour
             Debug.Log(HChance);
             if(handsChance >= HChance)
             {
-                Instantiate(handsPrefab);
                 
                 for (int i = 0; i < handsPrefabs.Count; i++)
                 {
