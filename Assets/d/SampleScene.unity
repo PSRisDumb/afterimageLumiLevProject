@@ -1897,8 +1897,8 @@ MonoBehaviour:
   - {fileID: 4759284970782686932, guid: 60624b6ca8542e842ac71755f825e662, type: 3}
   - {fileID: 2087775885598966033, guid: 4b463027000c06746bfc8faa0705ba44, type: 3}
   - {fileID: 8101574749767500028, guid: 507d7de504cfcd04085f671d7bac7075, type: 3}
-  photoSpawn: 3
-  photoChance: 70
+  photoSpawn: 7
+  photoChance: 60
   photos:
   - {fileID: 4777120342673320745, guid: 6677f0eec745c6c4dbbea2a149951eb2, type: 3}
   - {fileID: 7525417242264057365, guid: 3e35875c2ba13e24697bb83c31aff383, type: 3}
