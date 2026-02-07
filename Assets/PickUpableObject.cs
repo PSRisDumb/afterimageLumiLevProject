@@ -7,6 +7,14 @@ public class PickUpableObject : MonoBehaviour
     public BoxCollider Mc;
     public GameObject playerGameObject;
 
+    private void Start()
+    {
+        if (playerGameObject ==null)
+        {
+            playerGameObject = GameObject.Find("Player");
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject == playerGameObject)
