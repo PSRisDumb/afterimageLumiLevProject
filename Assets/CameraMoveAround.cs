@@ -6,6 +6,8 @@ public class CameraMoveAround : MonoBehaviour
 {
     public GameObject CamerasHolder; //Parent of Camera AND positions
 
+    public Animator blink;
+
     public GameObject One; // GameObject which holds the position that the camera should go to
     public GameObject two; // different one
     public GameObject three; // diff
@@ -21,6 +23,8 @@ public class CameraMoveAround : MonoBehaviour
     public Rigidbody rb; //Player
 
     public int speed; //Speed of player
+    private int XDirection;
+    private int ZDirection;
     public float Jumppower;
     public int CamPos; //Interger to itterate through Cam List with
 
@@ -42,6 +46,10 @@ public class CameraMoveAround : MonoBehaviour
         CamList.Add(four);
         MakeInTheWayObjectsSeeThrough();
     }
+    private void FixedUpdate()
+    {
+        
+    }
     void Update()
     {
         CamerasHolder.transform.position = transform.position;
@@ -60,6 +68,7 @@ public class CameraMoveAround : MonoBehaviour
                 CamPos++; // Campos + 1
             }
             Cam.transform.position = CamList[CamPos].transform.position; // Set the main Camera to the new pos
+            blink.Play("Blinkadoodle");
             Cam.transform.rotation = CamList[CamPos].transform.rotation; // Set the main cam rotation to new rotation
             MakeInTheWayObjectsSeeThrough();
         }
@@ -74,6 +83,7 @@ public class CameraMoveAround : MonoBehaviour
                 CamPos--;
             }
             Cam.transform.position = CamList[CamPos].transform.position;
+            blink.Play("Blinkadoodle");
             Cam.transform.rotation = CamList[CamPos].transform.rotation;
             MakeInTheWayObjectsSeeThrough();
         }
@@ -104,8 +114,6 @@ public class CameraMoveAround : MonoBehaviour
             Debug.Log("Hit");
             GetComponent<Rigidbody>().AddForce(0, Jumppower, 0,ForceMode.Impulse);
         }
-        Debug.Log(rb.velocity);
-
         //  Flashlight
 
         var lookAtPos = Input.mousePosition;
