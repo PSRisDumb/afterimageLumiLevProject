@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class PickUpableObject : MonoBehaviour
 {
-    public BoxCollider Mc;
+    public Rigidbody Rb;
     public GameObject playerGameObject;
+
+    private void Start()
+    {
+        playerGameObject = GameObject.Find("Player");
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -16,9 +21,9 @@ public class PickUpableObject : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    Mc.enabled = true;
                     cameraMove.NuhUhDrop = true;
                     cameraMove.HoldingObjectBool = true;
+                    Rb.freezeRotation = true;
                     cameraMove.HeldObject = gameObject;
                     StartCoroutine(cameraMove.WaitOneSecTillAllowDrop());
                 }
