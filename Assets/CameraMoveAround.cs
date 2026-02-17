@@ -154,7 +154,7 @@ public class CameraMoveAround : MonoBehaviour
                     Vector3 direction = (hit.point - transform.position).normalized;
                     Rigidbody heldRb = HeldObject.GetComponent<Rigidbody>();
                     rb.velocity = Vector3.zero;
-                    heldRb.AddForce((direction+Vector3.up*0.67f)*ThrowPower, ForceMode.Impulse);
+                    heldRb.AddForce((direction+Vector3.up*0.2f)*ThrowPower, ForceMode.Impulse);
                     heldRb.freezeRotation = false;
                     HeldObject = null;
                 }
