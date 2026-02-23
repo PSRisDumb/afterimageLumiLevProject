@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class CameraMoveAround : MonoBehaviour
 {
@@ -25,7 +28,8 @@ public class CameraMoveAround : MonoBehaviour
 
     public Rigidbody rb; //Player
 
-    public int speed; //Speed of player
+    public float speed; //Speed of player
+    public float speedAirSlow;
     private int sidewaysMoveDirection;
     private int frontwardsMoveDirection;
     public float Jumppower;
@@ -65,9 +69,17 @@ public class CameraMoveAround : MonoBehaviour
         Vector3 topCircle = transform.position + Vector3.up*0.5f;
         Vector3 bottomCircle = transform.position + Vector3.down*0.5f;
         float radius = 0.5f;
-        Vector3 movement = MoveDirection * speed * Time.deltaTime;
+
+        //If in the air slower MovementSpeed
+        float currSpeed = speed;
+        if (!CanJump())
+            currSpeed = speed / speedAirSlow;
+
+        //Final Movement Stuff
+        Vector3 movement = MoveDirection * currSpeed * Time.deltaTime;
         if (movement.magnitude > 0.001f)
         {
+            //Check if not Moving into a wall then allow movement
             bool hasHit = Physics.CapsuleCast(topCircle, bottomCircle, radius,
                                               movement.normalized, movement.magnitude, flashlightLayerMask);
             if (!hasHit)
@@ -94,9 +106,11 @@ public class CameraMoveAround : MonoBehaviour
                 CamPos++; // Campos + 1
             }
             Cam.transform.position = CamList[CamPos].transform.position; // Set the main Camera to the new pos
-            blink.Play("Blinkadoodle");
+            blink.SetTrigger("PlayAnim");
             Cam.transform.rotation = CamList[CamPos].transform.rotation; // Set the main cam rotation to new rotation
             MakeInTheWayObjectsSeeThrough();
+            StopCoroutine(KeepCompasAccurate());
+            StartCoroutine(KeepCompasAccurate());
         }
         if (Input.GetKeyDown(KeyCode.Q)) //Same exact stuff but inverse
         {
@@ -109,9 +123,11 @@ public class CameraMoveAround : MonoBehaviour
                 CamPos--;
             }
             Cam.transform.position = CamList[CamPos].transform.position;
-            blink.Play("Blinkadoodle");
+            blink.SetTrigger("PlayAnim");
             Cam.transform.rotation = CamList[CamPos].transform.rotation;
             MakeInTheWayObjectsSeeThrough();
+            StopCoroutine(KeepCompasAccurate());
+            StartCoroutine(KeepCompasAccurate());
         }
 
         //Movement, Connects to Fixed Update
@@ -131,7 +147,7 @@ public class CameraMoveAround : MonoBehaviour
         else
          sidewaysMoveDirection=0;
         //Jumping
-        if (Input.GetKey(KeyCode.Space) && CanJump())
+        if (Input.GetKeyDown(KeyCode.Space) && CanJump())
         {
             GetComponent<Rigidbody>().AddForce(0, Jumppower, 0,ForceMode.Impulse);
         }
@@ -166,6 +182,35 @@ public class CameraMoveAround : MonoBehaviour
         {
             HeldObject.transform.position = itemHolder.transform.position;
             HeldObject.transform.parent = itemHolder.transform;
+        }
+    }
+    public RectTransform jerryPointerRectTransform;
+    public float spinRate;
+    public IEnumerator KeepCompasAccurate()
+    {
+
+        //West 90, East 270, North 0, South 180
+        float dir = 0;
+        switch(CamPos)
+        {
+            case 0:
+                dir = 0;
+                break;
+            case 1:
+                dir = 270;
+                break;
+            case 2:
+                dir = 180;
+                break;
+            case 3:
+                dir = 90;
+                break;
+        }
+ //This is a lambda that will make the value of an int be subtracted by 360 if it's over 360
+        while (Mathf.Abs(jerryPointerRectTransform.localEulerAngles.z - dir) > 0.5f)
+        {
+            yield return new WaitForSeconds(spinRate);
+            jerryPointerRectTransform.rotation = Quaternion.RotateTowards(jerryPointerRectTransform.rotation, Quaternion.Euler(0,0,dir), 1f);
         }
     }
     void MakeInTheWayObjectsSeeThrough() //Makes unimportant walls invisiible/see through
