@@ -10,6 +10,8 @@ TagManager:
   - Southern
   - Ground
   - Item
+  - bottleCap
+  - Scale
   layers:
   - Default
   - TransparentFX
