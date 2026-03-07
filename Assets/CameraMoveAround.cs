@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Events;
 using static UnityEngine.GraphicsBuffer;
 
 public class CameraMoveAround : MonoBehaviour
@@ -44,6 +45,9 @@ public class CameraMoveAround : MonoBehaviour
     public LayerMask flashlightLayerMask;
 
     public float ThrowPower;
+
+    public UnityEvent<int> OnCameraMove;
+
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -94,41 +98,10 @@ public class CameraMoveAround : MonoBehaviour
 
         //Camera E / Q
 
-        if (Input.GetKeyDown(KeyCode.E)) // When the player presses E
-        {
-            if (CamPos == CamList.Count - 1) // If is at max
-            {
-                Debug.Log("Back to 0"); // log it
-                CamPos = 0;  // CamPos is reset to 0
-            }
-            else // If campos is not at max
-            {
-                CamPos++; // Campos + 1
-            }
-            Cam.transform.position = CamList[CamPos].transform.position; // Set the main Camera to the new pos
-            blink.SetTrigger("PlayAnim");
-            Cam.transform.rotation = CamList[CamPos].transform.rotation; // Set the main cam rotation to new rotation
-            MakeInTheWayObjectsSeeThrough();
-            StopCoroutine(KeepCompasAccurate());
-            StartCoroutine(KeepCompasAccurate());
-        }
-        if (Input.GetKeyDown(KeyCode.Q)) //Same exact stuff but inverse
-        {
-            if (CamPos == 0)
-            {
-                CamPos = CamList.Count - 1;
-            }
-            else
-            {
-                CamPos--;
-            }
-            Cam.transform.position = CamList[CamPos].transform.position;
-            blink.SetTrigger("PlayAnim");
-            Cam.transform.rotation = CamList[CamPos].transform.rotation;
-            MakeInTheWayObjectsSeeThrough();
-            StopCoroutine(KeepCompasAccurate());
-            StartCoroutine(KeepCompasAccurate());
-        }
+        if (Input.GetKeyDown(KeyCode.E) && canBlink) // When the player presses E
+            StartCoroutine(CameraMovement(false));
+        if (Input.GetKeyDown(KeyCode.Q) && canBlink) //Same exact stuff but inverse
+            StartCoroutine(CameraMovement(true));
 
         //Movement, Connects to Fixed Update
 
@@ -186,32 +159,42 @@ public class CameraMoveAround : MonoBehaviour
     }
     public RectTransform jerryPointerRectTransform;
     public float spinRate;
-    public IEnumerator KeepCompasAccurate()
+    public bool canBlink = true;
+    public IEnumerator CameraMovement(bool isLeft)
     {
+        canBlink = false;
+        if (isLeft)
+        {
+            if (CamPos == 0)
+            {
+                CamPos = CamList.Count - 1;
+            }
+            else
+            {
+                CamPos--;
+            }
+        }
+        else
+        {
+            if (CamPos == CamList.Count - 1) // If is at max
+            {
+                Debug.Log("Back to 0"); // log it
+                CamPos = 0;  // CamPos is reset to 0
+            }
+            else // If campos is not at max
+            {
+                CamPos++; // Campos + 1
+            }
+        }
+        blink.Play("Empty State");
+        blink.Play("doodledoodle");
+        yield return new WaitForSeconds(0.1156f);
+        Cam.transform.position = CamList[CamPos].transform.position;
+        Cam.transform.rotation = CamList[CamPos].transform.rotation;
+        MakeInTheWayObjectsSeeThrough();
 
-        //West 90, East 270, North 0, South 180
-        float dir = 0;
-        switch(CamPos)
-        {
-            case 0:
-                dir = 0;
-                break;
-            case 1:
-                dir = 270;
-                break;
-            case 2:
-                dir = 180;
-                break;
-            case 3:
-                dir = 90;
-                break;
-        }
- //This is a lambda that will make the value of an int be subtracted by 360 if it's over 360
-        while (Mathf.Abs(jerryPointerRectTransform.localEulerAngles.z - dir) > 0.5f)
-        {
-            yield return new WaitForSeconds(spinRate);
-            jerryPointerRectTransform.rotation = Quaternion.RotateTowards(jerryPointerRectTransform.rotation, Quaternion.Euler(0,0,dir), 1f);
-        }
+        OnCameraMove.Invoke(CamPos);
+        canBlink = true;
     }
     void MakeInTheWayObjectsSeeThrough() //Makes unimportant walls invisiible/see through
     {
@@ -282,7 +265,6 @@ public class CameraMoveAround : MonoBehaviour
         mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
         mat.renderQueue = -1;
     }
-
 
     bool CanJump()
     {
