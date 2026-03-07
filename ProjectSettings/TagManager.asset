@@ -12,6 +12,7 @@ TagManager:
   - Item
   - bottleCap
   - Scale
+  - puzzlePiece
   layers:
   - Default
   - TransparentFX
