@@ -10,13 +10,19 @@ public class EnemyManager : MonoBehaviour
     private float handTimer;
     public float handSpawn;
     public int handsChance;
-    public GameObject handsPrefab;
     public List<GameObject> handsPrefabs;
 
     private float photoTimer;
     public float photoSpawn;
     public int photoChance;
     public List<GameObject> photos;
+
+    public GameObject floater;
+    public int spawnRange;
+    private float floaterTimer;
+    public float floaterSpawn;
+    public int floaterChance;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +42,6 @@ public class EnemyManager : MonoBehaviour
             Debug.Log(HChance);
             if(handsChance >= HChance)
             {
-                Instantiate(handsPrefab);
                 
                 for (int i = 0; i < handsPrefabs.Count; i++)
                 {
@@ -79,6 +84,20 @@ public class EnemyManager : MonoBehaviour
 
             }
             photoTimer = 0;
+        }
+
+
+        floaterTimer += Time.deltaTime;
+        if(floaterTimer >= floaterSpawn)
+        {
+            Debug.Log("floater chance ...");
+            int fChance = Random.Range(0, 100);
+            Debug.Log(fChance);
+            if(floaterChance >= fChance)
+            {
+                //MAKE SPAWN FOR FLOATER
+                //Instantiate(floater, Vector3(Random.Range(-spawnRange, spawnRange),0,Random.Range(-spawnRange,spawnRange)), Quaternion.Euler)
+            }
         }
     }
 

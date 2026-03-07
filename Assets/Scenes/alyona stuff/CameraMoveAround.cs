@@ -20,7 +20,6 @@ public class CameraMoveAround : MonoBehaviour
     public GameObject Cam; // The Camera
 
     public Material seeThrough;
-    private string Last = "Southern";
     private List<GameObject> seeThroughObjects = new();
     public Material Base;
 
