@@ -1,9 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class CameraMoveAround : MonoBehaviour
 {
+    public GameObject CamerasHolder; //Parent of Camera AND positions
+
+    public Animator blink;
+
     public GameObject One; // GameObject which holds the position that the camera should go to
     public GameObject two; // different one
     public GameObject three; // diff
@@ -11,35 +20,83 @@ public class CameraMoveAround : MonoBehaviour
     public GameObject Cam; // The Camera
 
     public Material seeThrough;
-    private string Last ="Southern";
+    private string Last = "Southern";
+    private List<GameObject> seeThroughObjects = new();
     public Material Base;
 
     public List<GameObject> CamList; // List of all cams
 
     public Rigidbody rb; //Player
 
-    public int speed; //Speed of player
+    public float speed; //Speed of player
+    public float speedAirSlow;
+    private int sidewaysMoveDirection;
+    private int frontwardsMoveDirection;
+    public float Jumppower;
     public int CamPos; //Interger to itterate through Cam List with
 
+    public GameObject HeldObject;
+    public bool HoldingObjectBool;
+    public GameObject itemHolder;
+    public bool NuhUhDrop;
+
     public GameObject Flashlight;
+    public LayerMask flashlightLayerMask;
+
+    public float ThrowPower;
     void Start()
     {
         Application.targetFrameRate = 60;
+        HoldingObjectBool = false;
         //Add the cams to CamList
-        CamList.Add(One); 
+        CamList.Add(One);
         CamList.Add(two);
         CamList.Add(three);
         CamList.Add(four);
+    }
+    private void FixedUpdate()
+    {
+       Vector3 forward = Cam.transform.forward; // Define forward
+       forward.y = 0; //Make sure Y does not matter
+        forward = forward.normalized; //Normalize cuz better practice
+
+        Vector3 right = Cam.transform.right; // Define forward
+        right.y = 0; //Make sure Y does not matter
+        right = right.normalized; //Normalize cuz better practice
+
+        Vector3 MoveDirection = forward * frontwardsMoveDirection + right * sidewaysMoveDirection;
+
+        Vector3 topCircle = transform.position + Vector3.up*0.5f;
+        Vector3 bottomCircle = transform.position + Vector3.down*0.5f;
+        float radius = 0.5f;
+
+        //If in the air slower MovementSpeed
+        float currSpeed = speed;
+        if (!CanJump())
+            currSpeed = speed / speedAirSlow;
+
+        //Final Movement Stuff
+        Vector3 movement = MoveDirection * currSpeed * Time.deltaTime;
+        if (movement.magnitude > 0.001f)
+        {
+            //Check if not Moving into a wall then allow movement
+            bool hasHit = Physics.CapsuleCast(topCircle, bottomCircle, radius,
+                                              movement.normalized, movement.magnitude, flashlightLayerMask);
+            if (!hasHit)
+                rb.MovePosition(rb.position + movement);
+        }
+
         MakeInTheWayObjectsSeeThrough();
     }
     void Update()
     {
+        CamerasHolder.transform.position = transform.position;
 
         //Camera E / Q
 
         if (Input.GetKeyDown(KeyCode.E)) // When the player presses E
         {
-            if (CamPos == CamList.Count-1) // If is at max
+            if (CamPos == CamList.Count - 1) // If is at max
             {
                 Debug.Log("Back to 0"); // log it
                 CamPos = 0;  // CamPos is reset to 0
@@ -49,99 +106,202 @@ public class CameraMoveAround : MonoBehaviour
                 CamPos++; // Campos + 1
             }
             Cam.transform.position = CamList[CamPos].transform.position; // Set the main Camera to the new pos
+            blink.SetTrigger("PlayAnim");
             Cam.transform.rotation = CamList[CamPos].transform.rotation; // Set the main cam rotation to new rotation
             MakeInTheWayObjectsSeeThrough();
+            StopCoroutine(KeepCompasAccurate());
+            StartCoroutine(KeepCompasAccurate());
         }
         if (Input.GetKeyDown(KeyCode.Q)) //Same exact stuff but inverse
         {
             if (CamPos == 0)
             {
-                CamPos = CamList.Count-1;
+                CamPos = CamList.Count - 1;
             }
             else
             {
                 CamPos--;
             }
             Cam.transform.position = CamList[CamPos].transform.position;
+            blink.SetTrigger("PlayAnim");
             Cam.transform.rotation = CamList[CamPos].transform.rotation;
             MakeInTheWayObjectsSeeThrough();
+            StopCoroutine(KeepCompasAccurate());
+            StartCoroutine(KeepCompasAccurate());
         }
-        
-        //Movement
-        if (rb.velocity.x < 10)
+
+        //Movement, Connects to Fixed Update
+
+        //Forwards/Backwards movement
+        if (Input.GetKey(KeyCode.W))
+            frontwardsMoveDirection = 1; 
+        else if (Input.GetKey(KeyCode.S))
+            frontwardsMoveDirection = -1;
+        else
+            frontwardsMoveDirection = 0;
+        // Left/Right Movement
+        if (Input.GetKey(KeyCode.D))
+            sidewaysMoveDirection = 1;
+        else if (Input.GetKey(KeyCode.A))
+            sidewaysMoveDirection = -1;
+        else
+         sidewaysMoveDirection=0;
+        //Jumping
+        if (Input.GetKeyDown(KeyCode.Space) && CanJump())
         {
-            if (Input.GetKey(KeyCode.W))
-            {
-                rb.AddForce(Cam.transform.forward * speed * Time.deltaTime);
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                rb.AddForce(Cam.transform.forward * -1 * speed * Time.deltaTime);
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                rb.AddForce(Cam.transform.right * speed * Time.deltaTime);
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                rb.AddForce(Cam.transform.right * -1 * speed * Time.deltaTime);
-            }
-            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))
-            {
-                rb.velocity = new Vector3(rb.velocity.x / 2, rb.velocity.y, rb.velocity.z / 2);
-            }
+            GetComponent<Rigidbody>().AddForce(0, Jumppower, 0,ForceMode.Impulse);
         }
         //  Flashlight
 
         var lookAtPos = Input.mousePosition;
         Ray ray = Cam.GetComponent<Camera>().ScreenPointToRay(lookAtPos);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 100f, flashlightLayerMask))
         {
             Flashlight.transform.LookAt(hit.point);
+
+            //Throwing Thingys
+            if (HoldingObjectBool && !NuhUhDrop)
+            {
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    HoldingObjectBool = false;
+                    HeldObject.transform.parent = null;
+                    Vector3 direction = (hit.point - transform.position).normalized;
+                    Rigidbody heldRb = HeldObject.GetComponent<Rigidbody>();
+                    rb.velocity = Vector3.zero;
+                    heldRb.AddForce((direction+Vector3.up*0.2f)*ThrowPower, ForceMode.Impulse);
+                    heldRb.freezeRotation = false;
+                    HeldObject = null;
+                }
+            }
+        }
+
+        //Pick up Thingys
+        if (HoldingObjectBool)
+        {
+            HeldObject.transform.position = itemHolder.transform.position;
+            HeldObject.transform.parent = itemHolder.transform;
+        }
+    }
+    public RectTransform jerryPointerRectTransform;
+    public float spinRate;
+    public IEnumerator KeepCompasAccurate()
+    {
+
+        //West 90, East 270, North 0, South 180
+        float dir = 0;
+        switch(CamPos)
+        {
+            case 0:
+                dir = 0;
+                break;
+            case 1:
+                dir = 270;
+                break;
+            case 2:
+                dir = 180;
+                break;
+            case 3:
+                dir = 90;
+                break;
+        }
+ //This is a lambda that will make the value of an int be subtracted by 360 if it's over 360
+        while (Mathf.Abs(jerryPointerRectTransform.localEulerAngles.z - dir) > 0.5f)
+        {
+            yield return new WaitForSeconds(spinRate);
+            jerryPointerRectTransform.rotation = Quaternion.RotateTowards(jerryPointerRectTransform.rotation, Quaternion.Euler(0,0,dir), 1f);
         }
     }
     void MakeInTheWayObjectsSeeThrough() //Makes unimportant walls invisiible/see through
     {
-        foreach (GameObject thing in GameObject.FindGameObjectsWithTag(Last))
+        Vector3 Campos = Cam.transform.position;
+        Vector3 direction = transform.position - Campos;
+        float distance = Vector3.Distance(transform.position, Campos);
+        RaycastHit[] hits = Physics.RaycastAll(Campos, direction, distance);
+
+        List<GameObject> doNotRemove = new List<GameObject>();
+        if (hits.Length > 0 )
         {
-            var objectRenderer = thing.GetComponent<Renderer>();
-            objectRenderer.material = Base;
+            if (seeThroughObjects!= null)
+            {
+                for (int I = seeThroughObjects.Count - 1; I >= 0; I--)
+                {
+                    GameObject thing = seeThroughObjects[I];
+                    if (!hits.Any(hit => hit.collider.gameObject == thing))
+                    {
+                        var renderer = thing.GetComponent<Renderer>();
+                        if (renderer != null)
+                        {
+                            SetOpaque(renderer.material);
+                            seeThroughObjects.Remove(thing);
+                            Color color = new Color();
+                            color = renderer.material.color;
+                            color.a = 1f;
+                            renderer.material.color = color;
+                        }
+                    }
+                }
+            }
+            foreach (RaycastHit hit in hits)
+            {
+                var renderer = hit.collider.gameObject.GetComponent<Renderer>();
+                if (renderer != null)
+                {
+                    SetTransparent(renderer.material);
+                    seeThroughObjects.Add(hit.collider.gameObject);
+                    Color color = new Color();
+                    color = renderer.material.color;
+                    color.a = 0.4f;
+                    renderer.material.color = color;
+                }
+            }
         }
-        switch (CamPos)
+    }
+
+    void SetTransparent(Material mat)
+    {
+        mat.SetFloat("_Mode", 3); // Transparent mode
+        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        mat.SetInt("_ZWrite", 0);
+        mat.DisableKeyword("_ALPHATEST_ON");
+        mat.EnableKeyword("_ALPHABLEND_ON");
+        mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        mat.renderQueue = 3000;
+    }
+
+    void SetOpaque(Material mat)
+    {
+        mat.SetFloat("_Mode", 0); // Opaque mode
+        mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+        mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+        mat.SetInt("_ZWrite", 1);
+        mat.DisableKeyword("_ALPHATEST_ON");
+        mat.DisableKeyword("_ALPHABLEND_ON");
+        mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        mat.renderQueue = -1;
+    }
+
+
+    bool CanJump()
+    {
+            Vector3 origin = transform.position + Vector3.down * 1f;
+            float radius = 0.5f;
+        RaycastHit[] hits = Physics.SphereCastAll(origin, radius, Vector3.forward, 1);
+        foreach (RaycastHit hit in hits)
         {
-            case 0:
-                foreach (GameObject thing in GameObject.FindGameObjectsWithTag("Southern"))
-                {
-                    var objectRenderer = thing.GetComponent<Renderer>();
-                    objectRenderer.material = seeThrough;
-                }
-                Last = "Southern";
-                break;
-            case 1:
-                foreach (GameObject thing in GameObject.FindGameObjectsWithTag("Western"))
-                {
-                    var objectRenderer = thing.GetComponent<Renderer>();
-                    objectRenderer.material = seeThrough;
-                }
-                Last = "Western";
-                break;
-            case 2:
-                foreach (GameObject thing in GameObject.FindGameObjectsWithTag("Northern"))
-                {
-                    var objectRenderer = thing.GetComponent<Renderer>();
-                    objectRenderer.material = seeThrough;;
-                }
-                Last = "Northern";
-                break;
-            case 3:
-                foreach (GameObject thing in GameObject.FindGameObjectsWithTag("Eastern"))
-                {
-                    var objectRenderer = thing.GetComponent<Renderer>();
-                    objectRenderer.material = seeThrough;
-                }
-                Last = "Eastern";
-                break;
+            if (hit.transform.gameObject.CompareTag("Ground"))
+            {
+                return true;
+            }
         }
+        return false;
+    }
+
+    public IEnumerator WaitOneSecTillAllowDrop()
+    {
+         yield return new WaitForSeconds(1);
+        NuhUhDrop = false;
     }
 }
