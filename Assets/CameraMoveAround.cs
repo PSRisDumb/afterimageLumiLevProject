@@ -128,7 +128,6 @@ public class CameraMoveAround : MonoBehaviour
                     HeldObject.transform.parent = null;
                     HeldObject.transform.LookAt(hit.point);
                     HeldObject.GetComponent<Rigidbody>().AddForce(HeldObject.transform.forward*ThrowPower, ForceMode.Impulse);
-                    HeldObject.GetComponent<PickUpableObject>().Mc.enabled = true;
                     HeldObject = null;
                 }
             }

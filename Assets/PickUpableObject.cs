@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PickUpableObject : MonoBehaviour
 {
-    public BoxCollider Mc;
     public GameObject playerGameObject;
 
     private void OnTriggerStay(Collider other)
@@ -16,7 +15,6 @@ public class PickUpableObject : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    Mc.enabled = true;
                     cameraMove.NuhUhDrop = true;
                     cameraMove.HoldingObjectBool = true;
                     cameraMove.HeldObject = gameObject;

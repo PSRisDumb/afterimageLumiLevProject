@@ -826,11 +826,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7831757149735587941, guid: c14a1927de9857040aa5862846285328, type: 3}
   m_PrefabInstance: {fileID: 747335707}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &520503064 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7486158021025712863, guid: c14a1927de9857040aa5862846285328, type: 3}
-  m_PrefabInstance: {fileID: 747335707}
-  m_PrefabAsset: {fileID: 0}
 --- !u!54 &520503065
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -867,9 +862,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 520503063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f30c370bd66fa504283c96dbc5374ed2, type: 3}
+  m_Script: {fileID: 11500000, guid: 53af3582f0d3d8b4fa31e57f1e6cb0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerGameObject: {fileID: 280716218}
 --- !u!1 &534055075
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,7 +1236,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1283739534}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2374167946647501164, guid: c14a1927de9857040aa5862846285328, type: 3}
       propertyPath: playerGameObject
@@ -1276,15 +1272,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7486158021025712863, guid: c14a1927de9857040aa5862846285328, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.024421
+      value: 0.3175492
       objectReference: {fileID: 0}
     - target: {fileID: 7486158021025712863, guid: c14a1927de9857040aa5862846285328, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.378
+      value: 1.3385181
       objectReference: {fileID: 0}
     - target: {fileID: 7486158021025712863, guid: c14a1927de9857040aa5862846285328, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.75
+      value: 2.2986083
       objectReference: {fileID: 0}
     - target: {fileID: 7486158021025712863, guid: c14a1927de9857040aa5862846285328, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1292,7 +1288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7486158021025712863, guid: c14a1927de9857040aa5862846285328, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7486158021025712863, guid: c14a1927de9857040aa5862846285328, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1320,7 +1316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7831757149735587941, guid: c14a1927de9857040aa5862846285328, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2288,7 +2284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6545c0fbb0342f4683ad5fe4b47e041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door: {fileID: 0}
+  door: {fileID: 751910706}
   weight: 0
   paintingPuzzle:
   - {fileID: 1102396715}
@@ -2346,7 +2342,6 @@ Transform:
   m_Children:
   - {fileID: 563994293}
   - {fileID: 2036321152}
-  - {fileID: 520503064}
   - {fileID: 87692122}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3447,3 +3442,4 @@ SceneRoots:
   - {fileID: 1179110055}
   - {fileID: 1158118426}
   - {fileID: 1250412989}
+  - {fileID: 747335707}
