@@ -5431,7 +5431,7 @@ Transform:
   m_GameObject: {fileID: 736604748}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 115.92, y: 17.544, z: 203.76}
+  m_LocalPosition: {x: 115.92, y: 17.544, z: 160.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6613,7 +6613,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 21
   ThrowPower: 20
-  jerryPointerRectTransform: {fileID: 0}
+  jerryPointerRectTransform: {fileID: 1347021481}
   spinRate: 0.01
 --- !u!136 &961002837
 CapsuleCollider:
@@ -13692,7 +13692,7 @@ Transform:
   m_GameObject: {fileID: 2086832845}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 115.6, y: 17.544, z: 217.5}
+  m_LocalPosition: {x: 115.6, y: 17.544, z: 194.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13710,7 +13710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d58bcea5427d074e8cb9898e0fbfac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 736604749}
+  player: {fileID: 961002840}
   sanityDrain: 5
   spd: 2
   sanityScr: {fileID: 578078240}

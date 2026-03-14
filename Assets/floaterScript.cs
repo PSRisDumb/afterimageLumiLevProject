@@ -13,14 +13,14 @@ public class floaterScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sanityScr = GameObject.Find("sanityManager");
+        sanityScr = GameObject.Find("sanity manager");
     }
 
     // Update is called once per frame
     void Update()
     {
-        //MAKE FOLLOW PLAYER BETTER
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, spd * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, player.position, spd * Time.deltaTime);
+        //transform.position = new Vector3(0,)
     }
 
     private void OnCollisionEnter(Collision collision)

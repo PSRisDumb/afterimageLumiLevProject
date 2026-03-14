@@ -37,9 +37,9 @@ public class EnemyManager : MonoBehaviour
         handTimer += Time.deltaTime;
         if(handTimer >= handSpawn)
         {
-            Debug.Log("hands chance...");
+           // Debug.Log("hands chance...");
             int HChance = Random.Range(0, 100);
-            Debug.Log(HChance);
+           // Debug.Log(HChance);
             if(handsChance >= HChance)
             {
                 
@@ -52,11 +52,11 @@ public class EnemyManager : MonoBehaviour
                 
 
                 HChance = 0;
-                Debug.Log("hands chance sucsess: " + HChance + ">=" + handsChance);
+               // Debug.Log("hands chance sucsess: " + HChance + ">=" + handsChance);
             }
             else
             {
-                Debug.Log("hands chance fail: " + HChance + " not >=" + handsChance);
+                //Debug.Log("hands chance fail: " + HChance + " not >=" + handsChance);
 
             }
             handTimer = 0;
@@ -66,9 +66,9 @@ public class EnemyManager : MonoBehaviour
         photoTimer += Time.deltaTime;
         if (photoTimer >= photoSpawn)
         {
-            Debug.Log("photo chance...");
+           // Debug.Log("photo chance...");
             int PChance = Random.Range(0, 100);
-            Debug.Log(PChance);
+            //Debug.Log(PChance);
             if(photoChance >= PChance)
             {
                 int photo = Random.Range(0,photos.Count);
@@ -76,11 +76,11 @@ public class EnemyManager : MonoBehaviour
                 pos.anchoredPosition = new Vector2(Random.Range(-500f, 500f), Random.Range(-300f, 300f));
 
                 PChance = 0;
-                Debug.Log("hands chance sucsess: " + PChance + ">=" + photoChance);
+               // Debug.Log("hands chance sucsess: " + PChance + ">=" + photoChance);
             }
             else
             {
-                Debug.Log("hands chance fail: " + PChance + " not >=" + photoChance);
+               // Debug.Log("hands chance fail: " + PChance + " not >=" + photoChance);
 
             }
             photoTimer = 0;
@@ -90,9 +90,9 @@ public class EnemyManager : MonoBehaviour
         floaterTimer += Time.deltaTime;
         if(floaterTimer >= floaterSpawn)
         {
-            Debug.Log("floater chance ...");
+            //Debug.Log("floater chance ...");
             int fChance = Random.Range(0, 100);
-            Debug.Log(fChance);
+            //Debug.Log(fChance);
             if(floaterChance >= fChance)
             {
                 //MAKE SPAWN FOR FLOATER
