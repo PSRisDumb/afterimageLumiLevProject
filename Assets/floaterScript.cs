@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class floaterScript : MonoBehaviour
 {
-    public Transform player;
+    public GameObject player;
     public int sanityDrain;
     public int spd;
 
@@ -14,13 +14,16 @@ public class floaterScript : MonoBehaviour
     void Start()
     {
         sanityScr = GameObject.Find("sanity manager");
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.position, spd * Time.deltaTime);
-        //transform.position = new Vector3(0,)
+        Vector3 baseMovement = Vector3.MoveTowards(transform.position, player.transform.position, spd * Time.deltaTime);
+
+        float ghostFloat = Mathf.PingPong(Time.time * 0.1f, 0.1f)-0.05f;
+        transform.position = baseMovement + new Vector3(0, ghostFloat, 0);
     }
 
     private void OnCollisionEnter(Collision collision)
