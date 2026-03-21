@@ -8,14 +8,18 @@ TagManager:
   - Western
   - Eastern
   - Southern
+  - Ground
+  - Item
+  - bottleCap
+  - Scale
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - Ground
+  - Items
   - 
   - 
   - 
