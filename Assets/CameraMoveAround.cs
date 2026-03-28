@@ -135,17 +135,22 @@ public class CameraMoveAround : MonoBehaviour
 
             //Throwing Thingys
             if (HoldingObjectBool && !NuhUhDrop)
+            //If the play has an Object for more then 1s
             {
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.F)) //When F is pressed
                 {
-                    HoldingObjectBool = false;
-                    HeldObject.transform.parent = null;
+                    HoldingObjectBool = false; //Log the player as not having an object anymore
+                    HeldObject.transform.parent = null; // Make the Object No Longer follow Player
                     Vector3 direction = (hit.point - transform.position).normalized;
+                    //Finds Direction from transform position to cursor
                     Rigidbody heldRb = HeldObject.GetComponent<Rigidbody>();
-                    rb.velocity = Vector3.zero;
-                    heldRb.AddForce((direction+Vector3.up*0.2f)*ThrowPower, ForceMode.Impulse);
-                    heldRb.freezeRotation = false;
-                    HeldObject = null;
+                    //Finds the Rigid Body of the HeldObject
+                    rb.velocity = Vector3.zero; // Stops current Velocity
+                    heldRb.freezeRotation = false; //Unfreezes the held objects rotation
+                    heldRb.AddForce(direction*ThrowPower, ForceMode.Impulse);
+                    //Adds force in the direction * by throwpower In Impulse
+                    HeldObject.GetComponent<PickUpableObject>().TravelingStart(hit.point);
+                    HeldObject = null; //Held Object is no longer needed and discarded
                 }
             }
         }

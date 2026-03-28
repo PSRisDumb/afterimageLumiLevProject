@@ -595,7 +595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &705507994
 Light:
   m_ObjectHideFlags: 0
@@ -1317,7 +1317,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 863ef06ebba7fce46bbce418432f042c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spinDuration: 10
+  spinDuration: 1
+  isUsingCustomAnim: 0
+  easetype: 28
+  customCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.005554199
+      value: -0.011016846
+      inSlope: 0.46142474
+      outSlope: 0.46142474
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.24555564
+      value: 0.09972575
+      inSlope: Infinity
+      outSlope: Infinity
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.3273847
+      value: 0.5626765
+      inSlope: 3.1538587
+      outSlope: 3.1538587
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.65018374
+      outSlope: 0.65018374
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1636375818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1535,7 +1579,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1515014227}
         m_TargetAssemblyTypeName: JerryPointerUi, Assembly-CSharp
-        m_MethodName: RotateToDirection
+        m_MethodName: OnCameraMove
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1763,7 +1807,7 @@ RectTransform:
   m_Children:
   - {fileID: 975809415}
   - {fileID: 2008538530}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 636791405351068938}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2840,6 +2884,7 @@ Transform:
   - {fileID: 8078314182609518401}
   - {fileID: 7891323553138274827}
   - {fileID: 6483938873022855199}
+  - {fileID: 1815197781}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &653492327199261274
@@ -5033,9 +5078,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2265388778793816442, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: easetype
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265388778793816442, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: travelTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2265388778793816442, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
       propertyPath: playerGameObject
       value: 
       objectReference: {fileID: 1737786351}
+    - target: {fileID: 2265388778793816442, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: timeTillThrowLerpEnables
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3
@@ -8765,7 +8822,7 @@ GameObject:
   - component: {fileID: 8094450948027174973}
   m_Layer: 0
   m_Name: Cube (22)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13943,7 +14000,7 @@ GameObject:
   - component: {fileID: 8948221263877171961}
   m_Layer: 0
   m_Name: Cube (21)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14489,4 +14546,3 @@ SceneRoots:
   - {fileID: 578078242}
   - {fileID: 520223074}
   - {fileID: 1124004204}
-  - {fileID: 1815197781}

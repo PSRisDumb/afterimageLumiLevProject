@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class JerryPointerUi : MonoBehaviour
 {
     public float spinDuration = 1f;
     private Coroutine spinRoutine;
-
-    public void RotateToDirection(int camPos)
+    public bool isUsingCustomAnim;
+    public EaseType easetype;
+    public AnimationCurve customCurve;
+    public void OnCameraMove(int camPos)
     {
+        Debug.Log("Spinn");
         if(spinRoutine != null)
         {
             StopCoroutine(spinRoutine);
@@ -40,7 +44,11 @@ public class JerryPointerUi : MonoBehaviour
         for (float t = 0; t  < spinDuration; t += Time.deltaTime)
         {
             float param = t/spinDuration;
-            float easedParam = Easing.Ease(EaseType.InQuint, param);
+            float easedParam = Easing.Ease(easetype, param);
+            if (isUsingCustomAnim)
+            {
+                easedParam = customCurve.Evaluate(param);
+            }
             transform.localRotation = Quaternion.Lerp(startRot, endRot, easedParam);
             yield return null;
         }

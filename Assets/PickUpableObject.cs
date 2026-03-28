@@ -6,6 +6,9 @@ public class PickUpableObject : MonoBehaviour
 {
     public Rigidbody Rb;
     public GameObject playerGameObject;
+    public float timeTillThrowLerpEnables;
+    public float travelTime;
+    public EaseType easetype;
 
     private void Start()
     {
@@ -28,6 +31,28 @@ public class PickUpableObject : MonoBehaviour
                     StartCoroutine(cameraMove.WaitOneSecTillAllowDrop());
                 }
             }
+        }
+    }
+    public Coroutine TravelingCourritineHolder;
+    public void TravelingStart(Vector3 target)
+    {
+        if (TravelingCourritineHolder != null)
+        {
+            StopCoroutine(TravelingCourritineHolder);
+        }
+        TravelingCourritineHolder = StartCoroutine(Traveling(target));
+    }
+    private IEnumerator Traveling(Vector3 targetVector)
+    {
+        yield return new WaitForSeconds(timeTillThrowLerpEnables);
+
+        Vector3 startPos = transform.position;
+        for (float t = 0; t < travelTime; t += Time.deltaTime)
+        {
+            float param = t / travelTime;
+            float easedParam = Easing.Ease(easetype, param);
+            transform.position = Vector3.Lerp(startPos, targetVector, easedParam);
+            yield return null;
         }
     }
 }
