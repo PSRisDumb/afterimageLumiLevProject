@@ -9,7 +9,10 @@ public class floaterScript : MonoBehaviour
     public int spd;
 
     public GameObject sanityScr;
-    private float sanity; 
+    private float sanity;
+
+    public float Death; // death timer
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +23,12 @@ public class floaterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Death += Time.deltaTime;
+        if(Death >= 15f)
+        {
+            Destroy(gameObject);
+        }
+
         Vector3 baseMovement = Vector3.MoveTowards(transform.position, player.transform.position, spd * Time.deltaTime);
 
         float ghostFloat = Mathf.PingPong(Time.time * 0.1f, 0.1f)-0.05f;
