@@ -10,6 +10,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class CameraMoveAround : MonoBehaviour
 {
+    //CameraMoveAround Script V2 (4/17)
+
     public GameObject CamerasHolder; //Parent of Camera AND positions
 
     public Animator blink;
@@ -21,7 +23,6 @@ public class CameraMoveAround : MonoBehaviour
     public GameObject Cam; // The Camera
 
     public Material seeThrough;
-    private string Last = "Southern";
     private List<GameObject> seeThroughObjects = new();
     public Material Base;
 
@@ -33,6 +34,7 @@ public class CameraMoveAround : MonoBehaviour
     public float speedAirSlow;
     private int sidewaysMoveDirection;
     private int frontwardsMoveDirection;
+    public LayerMask playerCollidableLayers;
     public float Jumppower;
     public int CamPos; //Interger to itterate through Cam List with
 
@@ -85,7 +87,7 @@ public class CameraMoveAround : MonoBehaviour
         {
             //Check if not Moving into a wall then allow movement
             bool hasHit = Physics.CapsuleCast(topCircle, bottomCircle, radius,
-                                              movement.normalized, movement.magnitude, flashlightLayerMask);
+                                              movement.normalized, movement.magnitude, playerCollidableLayers);
             if (!hasHit)
                 rb.MovePosition(rb.position + movement);
         }
@@ -222,6 +224,8 @@ public class CameraMoveAround : MonoBehaviour
                         if (renderer != null)
                         {
                             SetOpaque(renderer.material);
+                            if (!thing.gameObject.CompareTag("Non-Collidable (Player)") || !thing.gameObject.CompareTag("Player"))
+                                thing.gameObject.layer = 0;
                             seeThroughObjects.Remove(thing);
                             Color color = new Color();
                             color = renderer.material.color;
@@ -237,6 +241,9 @@ public class CameraMoveAround : MonoBehaviour
                 if (renderer != null)
                 {
                     SetTransparent(renderer.material);
+                    if (!hit.collider.gameObject.CompareTag("Non-Collidable (Player)") || !hit.collider.gameObject.CompareTag("Player"))
+                        hit.collider.gameObject.layer = 7;
+
                     seeThroughObjects.Add(hit.collider.gameObject);
                     Color color = new Color();
                     color = renderer.material.color;

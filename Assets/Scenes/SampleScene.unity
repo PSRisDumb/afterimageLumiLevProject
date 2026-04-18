@@ -595,7 +595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &705507994
 Light:
   m_ObjectHideFlags: 0
@@ -1563,6 +1563,9 @@ MonoBehaviour:
   rb: {fileID: 1737786357}
   speed: 10
   speedAirSlow: 1.5
+  playerCollidableLayers:
+    serializedVersion: 2
+    m_Bits: 127
   Jumppower: 5
   CamPos: 0
   HeldObject: {fileID: 0}
@@ -4589,13 +4592,13 @@ GameObject:
   - component: {fileID: 5158413896317236103}
   - component: {fileID: 6559151132698260559}
   - component: {fileID: 6576936882291077899}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: paper
   m_TagString: Western
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1892980331997674239
 GameObject:
   m_ObjectHideFlags: 0
@@ -5441,9 +5444,9 @@ GameObject:
   - component: {fileID: 3409355610874095312}
   - component: {fileID: 6408178723354385759}
   - component: {fileID: 4668491992805491140}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: exit
-  m_TagString: Untagged
+  m_TagString: Non-Collidable (Player)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10751,7 +10754,7 @@ GameObject:
   - component: {fileID: 5445561499428415321}
   m_Layer: 0
   m_Name: Cube (19)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11525,9 +11528,9 @@ GameObject:
   - component: {fileID: 5400298125821648257}
   - component: {fileID: 8832364356784992041}
   - component: {fileID: 5313602933589516292}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StartingSF
-  m_TagString: Western
+  m_TagString: Non-Collidable (Player)
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11787,7 +11790,7 @@ GameObject:
   - component: {fileID: 4721918236860063687}
   m_Layer: 0
   m_Name: Cube (9)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12250,7 +12253,7 @@ GameObject:
   - component: {fileID: 3914590454593244651}
   m_Layer: 0
   m_Name: Cube (13)
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
