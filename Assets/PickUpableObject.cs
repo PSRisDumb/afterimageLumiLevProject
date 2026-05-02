@@ -1,24 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PickUpableObject : MonoBehaviour
 {
     public Rigidbody Rb;
     public GameObject playerGameObject;
+    public GameObject eToPickUpText;
+
     public float timeTillThrowLerpEnables;
     public float travelTime;
-    public EaseType easetype;
+    public float InteractDistance;
+
+   public EaseType easetype;
 
     private void Start()
     {
         playerGameObject = GameObject.Find("Player");
     }
-
-    private void OnTriggerStay(Collider other)
+    private void Update()
     {
-        if (other.gameObject == playerGameObject)
+        if (Vector3.Distance(playerGameObject.transform.position,transform.position) < InteractDistance)
         {
+            eToPickUpText.SetActive(true);
+            eToPickUpText.transform.LookAt(playerGameObject.GetComponent<CameraMoveAround>().Cam.transform);
+            eToPickUpText.transform.Rotate(0, 180, 0);
             var cameraMove = playerGameObject.GetComponent<CameraMoveAround>();
             if (!cameraMove.HoldingObjectBool)
             {
@@ -31,6 +38,12 @@ public class PickUpableObject : MonoBehaviour
                     StartCoroutine(cameraMove.WaitOneSecTillAllowDrop());
                 }
             }
+            else
+                eToPickUpText.SetActive(false);
+        }
+        else
+        {
+            eToPickUpText.SetActive(false);
         }
     }
     public Coroutine TravelingCourritineHolder;
@@ -44,8 +57,9 @@ public class PickUpableObject : MonoBehaviour
     }
     private IEnumerator Traveling(Vector3 targetVector)
     {
+        Rb.useGravity = false;
         yield return new WaitForSeconds(timeTillThrowLerpEnables);
-
+        Rb.velocity = Vector3.zero;
         Vector3 startPos = transform.position;
         for (float t = 0; t < travelTime; t += Time.deltaTime)
         {
@@ -54,5 +68,6 @@ public class PickUpableObject : MonoBehaviour
             transform.position = Vector3.Lerp(startPos, targetVector, easedParam);
             yield return null;
         }
+        Rb.useGravity = true;
     }
 }
