@@ -431,6 +431,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4adcae8831574974daca07d5b7365e2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyCanvas: {fileID: 0}
+  handSpawn: 0
+  handsChance: 0
+  handsPrefab: {fileID: 0}
+  handsPrefabs: []
+  photoSpawn: 0
+  photoChance: 0
+  photos: []
 --- !u!4 &520223074
 Transform:
   m_ObjectHideFlags: 0
@@ -475,6 +483,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b438592aca9caf49ae4c8fc6a2232fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sanityDrain: 0
+  sanity: 0
+  sanityBar: {fileID: 0}
 --- !u!4 &578078242
 Transform:
   m_ObjectHideFlags: 0
@@ -1642,7 +1653,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -1740,7 +1751,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -2132,6 +2143,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008538529}
   m_CullTransparentMesh: 1
+--- !u!1001 &2029559607
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.473591
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 16.301476
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 174.4808
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8534657560940871666, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
+      propertyPath: m_Name
+      value: Bottle Cap
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
 --- !u!1 &2100872220
 GameObject:
   m_ObjectHideFlags: 0
@@ -5105,95 +5173,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7891323553138274827}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2211233208030114954
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2265388778793816442, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: easetype
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2265388778793816442, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: travelTime
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2265388778793816442, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: playerGameObject
-      value: 
-      objectReference: {fileID: 1737786351}
-    - target: {fileID: 2265388778793816442, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: timeTillThrowLerpEnables
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.4941
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 17.091
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 184.92
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2752305232419839406, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8534657560940871666, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
-      propertyPath: m_Name
-      value: Bottle Cap
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 17c3343e2cefaed4d93b827a899263c8, type: 3}
 --- !u!65 &2241551839348672985
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14578,7 +14557,7 @@ SceneRoots:
   - {fileID: 494623327}
   - {fileID: 1651034187}
   - {fileID: 636791405351068938}
-  - {fileID: 2211233208030114954}
   - {fileID: 578078242}
   - {fileID: 520223074}
   - {fileID: 1124004204}
+  - {fileID: 2029559607}
