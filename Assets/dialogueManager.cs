@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class dialogueManager : MonoBehaviour
 {
+    public Image characterBase;
+    public Sprite[] characters;
+
     private string[] currentLines;
     private int[] currentSpeaker;
     public string[] tutorialLines1;//the opening dialogue with jerry
@@ -13,9 +17,14 @@ public class dialogueManager : MonoBehaviour
     public int[] tut2Speaker; //see whos talking 
     private bool tut2GO; // See if tut lines 2 has gone
     public string[] tutorialLines3;//the opening dialogue with jerry
+    public int[] tut3Speaker; //see whos talking 
+    private bool tut3Go;
     public string[] safeRoomLines1; // lines when the first ghost goes after you
+    public int[] saf1speaker; //see whos talking 
+    public bool saf1GO = false;
     public string[] safeRoomLines2; // lines when the first ghost goes after you
-    public string[] safeRoomLines3; // lines when the first ghost goes after you
+    public int[] saf2speaker; //see whos talking 
+    public bool saf2GO = false;
     public float textSpd;
     
     private int index;
@@ -24,6 +33,7 @@ public class dialogueManager : MonoBehaviour
     public GameObject dialogueBox;
     public TextMeshProUGUI dialogueText;
 
+    public GameObject flashlight;
     public GameObject GMS;
 
     public GameObject lightSource;
@@ -45,6 +55,7 @@ public class dialogueManager : MonoBehaviour
 
         expl1 = true;
         explanation.text = "";
+        flashlight.SetActive(false);
     }
 
     // Update is called once per frame
@@ -95,20 +106,39 @@ public class dialogueManager : MonoBehaviour
             if (lineChange >= 3f)
             {
                 lightSource.SetActive(true);
+                //flashlight.SetActive(true);
                 currentLines = tutorialLines2;
                 currentSpeaker = tut2Speaker;
                 StartDialogue(currentLines, tut2Speaker);
                 lineChange = 0;
                 tut2GO = false;
+                tut3Go = true;
             }
         }
         
-        if (GMS.GetComponent<GMScript>().doorOpen == true)
+        if (GMS.GetComponent<GMScript>().piece == true && tut3Go)
         {
-            //StartDialogue(safeRoomLines1);
+            currentLines = tutorialLines3;
+            currentSpeaker = tut3Speaker;
+            StartDialogue(currentLines, currentSpeaker);
+            tut3Go = false;
         }
-        
 
+        if (saf1GO)
+        {
+            currentLines = safeRoomLines1;
+            currentSpeaker = saf1speaker;
+            StartDialogue(currentLines, currentSpeaker);
+            saf1GO = false;
+        }
+
+        if (saf2GO)
+        {
+            currentLines = safeRoomLines2;
+            currentSpeaker = saf2speaker;
+            StartDialogue(currentLines, currentSpeaker);
+            saf2GO = false;
+        }
     }
 
     void StartDialogue(string[] lines, int[] speaker)
@@ -123,15 +153,15 @@ public class dialogueManager : MonoBehaviour
     {
         if(speaker[index] == 0)
         {
-            Debug.Log("jerry talking rn");
+            characterBase.sprite = characters[0];
         }
         else if(speaker[index] == 1)
         {
-            Debug.Log("wally talking rn");
+            characterBase.sprite = characters[1];
         }
         else
         {
-            Debug.Log("other wally talking rn");
+            characterBase.sprite = characters[2];
 
         }
 

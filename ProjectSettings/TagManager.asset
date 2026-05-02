@@ -11,7 +11,10 @@ TagManager:
   - Ground
   - Item
   - bottleCap
-  - Non-Collidable (Player)
+  - Scale
+  - puzzle piece
+  - trigger
+  - saferoom
   layers:
   - Default
   - TransparentFX
@@ -20,7 +23,7 @@ TagManager:
   - Water
   - UI
   - Items
-  - Non-Collidable (Player)
+  - 
   - 
   - 
   - 

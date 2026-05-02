@@ -13,6 +13,8 @@ public class floaterScript : MonoBehaviour
 
     public float Death; // death timer
 
+    public bool safeRoom = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,10 +31,16 @@ public class floaterScript : MonoBehaviour
             Destroy(gameObject);
         }
 
+        
         Vector3 baseMovement = Vector3.MoveTowards(transform.position, player.transform.position, spd * Time.deltaTime);
 
         float ghostFloat = Mathf.PingPong(Time.time * 0.1f, 0.1f)-0.05f;
         transform.position = baseMovement + new Vector3(0, ghostFloat, 0);
+
+        if(safeRoom == true)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
