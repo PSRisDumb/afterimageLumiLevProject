@@ -121,8 +121,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   sanityDrain: 5
-  spd: 2
+  spd: 3
   sanityScr: {fileID: 0}
+  Death: 0
 --- !u!1 &3799647303274939601
 GameObject:
   m_ObjectHideFlags: 0

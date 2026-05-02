@@ -4,25 +4,35 @@ using UnityEngine;
 
 public class GMScript : MonoBehaviour
 {
+    public GameObject player;
+
     public GameObject door;
-    public bool doorOpen;
     public int weight;
+    public GameObject picPiece;
+    public bool picUp = false;
+    public bool piece; // to see if the piece exists
 
     // Start is called before the first frame update
     void Start()
     {
         weight = 0;
-        doorOpen = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (weight == 10)
+        if (weight == 10 && piece == false)
         {
-            doorOpen = true; 
+            Instantiate(picPiece, new Vector3(-3.7f,18f,137f), Quaternion.identity);
+            piece = true;
+        }
+
+
+        if (picUp)
+        {
             door.SetActive(false);
         }
 
     }
+
 }
