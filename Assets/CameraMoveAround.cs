@@ -1,12 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.GraphicsBuffer;
 
 public class CameraMoveAround : MonoBehaviour
 {
@@ -143,6 +139,7 @@ public class CameraMoveAround : MonoBehaviour
                 {
                     HoldingObjectBool = false; //Log the player as not having an object anymore
                     HeldObject.transform.parent = null; // Make the Object No Longer follow Player
+
                     Vector3 direction = (hit.point - transform.position).normalized;
                     //Finds Direction from transform position to cursor
                     Rigidbody heldRb = HeldObject.GetComponent<Rigidbody>();
@@ -199,9 +196,25 @@ public class CameraMoveAround : MonoBehaviour
         Cam.transform.position = CamList[CamPos].transform.position;
         Cam.transform.rotation = CamList[CamPos].transform.rotation;
         MakeInTheWayObjectsSeeThrough();
-
+        int dir = 0;
+        switch (CamPos)
+        {
+            case 0:
+                dir = 0;
+                break;
+            case 1:
+                dir = 270;
+                break;
+            case 2:
+                dir = 180;
+                break;
+            case 3:
+                dir = 90;
+                break;
+        }
         OnCameraMove.Invoke(CamPos);
         canBlink = true;
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, dir, transform.eulerAngles.z);
     }
     void MakeInTheWayObjectsSeeThrough() //Makes unimportant walls invisiible/see through
     {

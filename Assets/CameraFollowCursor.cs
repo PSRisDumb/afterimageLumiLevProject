@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CameraFollowCursor : MonoBehaviour
 {
@@ -45,5 +46,9 @@ public class CameraFollowCursor : MonoBehaviour
         if (angle < -180f)
             angle += 360;
         return angle;
+    }
+    public void startGame()
+    {
+        SceneManager.LoadScene(1);
     }
 }

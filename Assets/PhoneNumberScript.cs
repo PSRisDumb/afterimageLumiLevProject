@@ -6,12 +6,12 @@ public class PhoneNumberScript : MonoBehaviour
 {
     public PhonePuzzleManager manager;
     public int number;
-    public float EjectForce;
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        manager.AddToCombo(number);
-        GameObject Item = other.gameObject;
-        Rigidbody rb = Item.GetComponent<Rigidbody>();
+        if (manager.isNumberAllowed)
+            manager.AddToCombo(number);
+        PickUpableObject Object = other.gameObject.GetComponent<PickUpableObject>();
+        Object.TravelingStart(manager.player.transform.position);
     }
 }
