@@ -6,44 +6,97 @@ using UnityEngine;
 public class knobScript : MonoBehaviour
 {
     public GameObject heartMonitor;
+    public LineRenderer sineWave;
+    public CameraMoveAround playerScript;
 
     public bool isRateMonitor;
     public bool canInteract;
+    public bool isInteracting;
 
     public float rate;
     public float amp;
     public float heartRate;
     public float height;
+    public float length;
+
+    public int points;
 
     public bool updateMonitor;
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerScript = GameObject.Find("Player").GetComponent<CameraMoveAround>();
+        sineWave = GameObject.Find("sineWave").GetComponent<LineRenderer>();
+        points = 100;
+        length = 10f;
+        heartRate = .1f;
+        height = .5f;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        heartMonitor.GetComponent<TextMeshPro>().SetText($"Heart rate: {Mathf.FloorToInt(heartRate)} Amp: {Mathf.FloorToInt(height)}");
-
-    }
-
-    private void OnTriggerStay(Collider collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        //heartMonitor.GetComponent<TextMeshPro>().SetText($"Heart rate: {Mathf.FloorToInt(heartRate)} Amp: {Mathf.FloorToInt(height)}");
+        for (int i = 0;  i<points; i++)
         {
-            if (isRateMonitor)
+            float x = (i / (float)points) * length;
+            float y = Mathf.Sin(x + Time.time * heartRate) * height;
+            sineWave.SetPosition(i, new Vector3(x,y,0));
+        }
+        if (isInteracting) 
+        {
+            if (Input.GetKey(KeyCode.A))
             {
-                heartRate += rate * Time.fixedDeltaTime;
+                if (isRateMonitor)
+                {
+                    heartRate -= rate * Time.deltaTime;
+                } else
+                {
+                    height -= amp * Time.deltaTime;
+                }
             }
-            else
+            if (Input.GetKey(KeyCode.D))
             {
-                height += amp * Time.fixedDeltaTime;
+                if (isRateMonitor)
+                {
+                    heartRate += rate * Time.deltaTime;
+                } else
+                {
+                    height += amp * Time.deltaTime;
+                }
             }
         }
-
     }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.F) && canInteract && !isInteracting)
+        {
+            playerScript.speed = 0;
+            isInteracting = true;
+        } else if(Input.GetKeyDown(KeyCode.F) && canInteract && isInteracting)
+        {
+            playerScript.speed = 10;
+            isInteracting = false;
+        }
+        sineWave.positionCount = points;
+    }
+
+    //private void OnTriggerStay(Collider collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        if (isRateMonitor)
+    //        {
+    //            heartRate += rate * Time.fixedDeltaTime;
+    //        }
+    //        else
+    //        {
+    //            height += amp * Time.fixedDeltaTime;
+    //        }
+    //    }
+
+    //}
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Player"))
