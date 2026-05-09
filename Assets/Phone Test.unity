@@ -3927,7 +3927,7 @@ MonoBehaviour:
   OnCameraMove:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1070105044}
         m_TargetAssemblyTypeName: JerryPointerUi, Assembly-CSharp
         m_MethodName: OnCameraMove
         m_Mode: 0
