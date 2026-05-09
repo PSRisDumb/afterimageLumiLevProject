@@ -1,14 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+using UnityEngine.Events;
 
 public class CameraMoveAround : MonoBehaviour
 {
+    //CameraMoveAround Script V2 (4/17)
+
     public GameObject CamerasHolder; //Parent of Camera AND positions
 
     public Animator blink;
@@ -31,6 +30,7 @@ public class CameraMoveAround : MonoBehaviour
     public float speedAirSlow;
     private int sidewaysMoveDirection;
     private int frontwardsMoveDirection;
+    public LayerMask playerCollidableLayers;
     public float Jumppower;
     public int CamPos; //Interger to itterate through Cam List with
 
@@ -43,6 +43,9 @@ public class CameraMoveAround : MonoBehaviour
     public LayerMask flashlightLayerMask;
 
     public float ThrowPower;
+
+    public UnityEvent<int> OnCameraMove;
+
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -80,7 +83,7 @@ public class CameraMoveAround : MonoBehaviour
         {
             //Check if not Moving into a wall then allow movement
             bool hasHit = Physics.CapsuleCast(topCircle, bottomCircle, radius,
-                                              movement.normalized, movement.magnitude, flashlightLayerMask);
+                                              movement.normalized, movement.magnitude, playerCollidableLayers);
             if (!hasHit)
                 rb.MovePosition(rb.position + movement);
         }
@@ -93,41 +96,10 @@ public class CameraMoveAround : MonoBehaviour
 
         //Camera E / Q
 
-        if (Input.GetKeyDown(KeyCode.E)) // When the player presses E
-        {
-            if (CamPos == CamList.Count - 1) // If is at max
-            {
-                Debug.Log("Back to 0"); // log it
-                CamPos = 0;  // CamPos is reset to 0
-            }
-            else // If campos is not at max
-            {
-                CamPos++; // Campos + 1
-            }
-            Cam.transform.position = CamList[CamPos].transform.position; // Set the main Camera to the new pos
-            blink.SetTrigger("PlayAnim");
-            Cam.transform.rotation = CamList[CamPos].transform.rotation; // Set the main cam rotation to new rotation
-            MakeInTheWayObjectsSeeThrough();
-            StopCoroutine(KeepCompasAccurate());
-            StartCoroutine(KeepCompasAccurate());
-        }
-        if (Input.GetKeyDown(KeyCode.Q)) //Same exact stuff but inverse
-        {
-            if (CamPos == 0)
-            {
-                CamPos = CamList.Count - 1;
-            }
-            else
-            {
-                CamPos--;
-            }
-            Cam.transform.position = CamList[CamPos].transform.position;
-            blink.SetTrigger("PlayAnim");
-            Cam.transform.rotation = CamList[CamPos].transform.rotation;
-            MakeInTheWayObjectsSeeThrough();
-            StopCoroutine(KeepCompasAccurate());
-            StartCoroutine(KeepCompasAccurate());
-        }
+        if (Input.GetKeyDown(KeyCode.E) && canBlink) // When the player presses E
+            StartCoroutine(CameraMovement(false));
+        if (Input.GetKeyDown(KeyCode.Q) && canBlink) //Same exact stuff but inverse
+            StartCoroutine(CameraMovement(true));
 
         //Movement, Connects to Fixed Update
 
@@ -161,17 +133,23 @@ public class CameraMoveAround : MonoBehaviour
 
             //Throwing Thingys
             if (HoldingObjectBool && !NuhUhDrop)
+            //If the play has an Object for more then 1s
             {
-                if (Input.GetKeyDown(KeyCode.F))
+                if (Input.GetKeyDown(KeyCode.F)) //When F is pressed
                 {
-                    HoldingObjectBool = false;
-                    HeldObject.transform.parent = null;
+                    HoldingObjectBool = false; //Log the player as not having an object anymore
+                    HeldObject.transform.parent = null; // Make the Object No Longer follow Player
+
                     Vector3 direction = (hit.point - transform.position).normalized;
+                    //Finds Direction from transform position to cursor
                     Rigidbody heldRb = HeldObject.GetComponent<Rigidbody>();
-                    rb.velocity = Vector3.zero;
-                    heldRb.AddForce((direction+Vector3.up*0.2f)*ThrowPower, ForceMode.Impulse);
-                    heldRb.freezeRotation = false;
-                    HeldObject = null;
+                    //Finds the Rigid Body of the HeldObject
+                    rb.velocity = Vector3.zero; // Stops current Velocity
+                    heldRb.freezeRotation = false; //Unfreezes the held objects rotation
+                    heldRb.AddForce(direction*ThrowPower, ForceMode.Impulse);
+                    //Adds force in the direction * by throwpower In Impulse
+                    HeldObject.GetComponent<PickUpableObject>().TravelingStart(hit.point);
+                    HeldObject = null; //Held Object is no longer needed and discarded
                 }
             }
         }
@@ -185,12 +163,41 @@ public class CameraMoveAround : MonoBehaviour
     }
     public RectTransform jerryPointerRectTransform;
     public float spinRate;
-    public IEnumerator KeepCompasAccurate()
+    public bool canBlink = true;
+    public IEnumerator CameraMovement(bool isLeft)
     {
-
-        //West 90, East 270, North 0, South 180
-        float dir = 0;
-        switch(CamPos)
+        canBlink = false;
+        if (isLeft)
+        {
+            if (CamPos == 0)
+            {
+                CamPos = CamList.Count - 1;
+            }
+            else
+            {
+                CamPos--;
+            }
+        }
+        else
+        {
+            if (CamPos == CamList.Count - 1) // If is at max
+            {
+                Debug.Log("Back to 0"); // log it
+                CamPos = 0;  // CamPos is reset to 0
+            }
+            else // If campos is not at max
+            {
+                CamPos++; // Campos + 1
+            }
+        }
+        blink.Play("Empty State");
+        blink.Play("doodledoodle");
+        yield return new WaitForSeconds(0.1156f);
+        Cam.transform.position = CamList[CamPos].transform.position;
+        Cam.transform.rotation = CamList[CamPos].transform.rotation;
+        MakeInTheWayObjectsSeeThrough();
+        int dir = 0;
+        switch (CamPos)
         {
             case 0:
                 dir = 0;
@@ -205,12 +212,9 @@ public class CameraMoveAround : MonoBehaviour
                 dir = 90;
                 break;
         }
- //This is a lambda that will make the value of an int be subtracted by 360 if it's over 360
-        while (Mathf.Abs(jerryPointerRectTransform.localEulerAngles.z - dir) > 0.5f)
-        {
-            yield return new WaitForSeconds(spinRate);
-            jerryPointerRectTransform.rotation = Quaternion.RotateTowards(jerryPointerRectTransform.rotation, Quaternion.Euler(0,0,dir), 1f);
-        }
+        OnCameraMove.Invoke(CamPos);
+        canBlink = true;
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, dir, transform.eulerAngles.z);
     }
     void MakeInTheWayObjectsSeeThrough() //Makes unimportant walls invisiible/see through
     {
@@ -233,6 +237,8 @@ public class CameraMoveAround : MonoBehaviour
                         if (renderer != null)
                         {
                             SetOpaque(renderer.material);
+                            if (!thing.gameObject.CompareTag("Non-Collidable (Player)") || !thing.gameObject.CompareTag("Player"))
+                                thing.gameObject.layer = 0;
                             seeThroughObjects.Remove(thing);
                             Color color = new Color();
                             color = renderer.material.color;
@@ -248,6 +254,9 @@ public class CameraMoveAround : MonoBehaviour
                 if (renderer != null)
                 {
                     SetTransparent(renderer.material);
+                    if (!hit.collider.gameObject.CompareTag("Non-Collidable (Player)") || !hit.collider.gameObject.CompareTag("Player"))
+                        hit.collider.gameObject.layer = 7;
+
                     seeThroughObjects.Add(hit.collider.gameObject);
                     Color color = new Color();
                     color = renderer.material.color;
@@ -281,7 +290,6 @@ public class CameraMoveAround : MonoBehaviour
         mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
         mat.renderQueue = -1;
     }
-
 
     bool CanJump()
     {
