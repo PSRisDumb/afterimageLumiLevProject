@@ -10,6 +10,11 @@ public class GMScript : MonoBehaviour
     public GameObject[] paintingPuzzle;
     public bool[] hasPiece = new bool[8];
 
+    public bool piece = false;
+    public bool picUp = false;
+
+    public GameObject picPiece;
+
     // Start is called before the first frame update
 
     private void Awake()
@@ -26,11 +31,17 @@ public class GMScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (weight == 10)
+        if (weight == 10 && piece == false)
+        {
+            Instantiate(picPiece, new Vector3(-3.7f, 18f, 137f), Quaternion.identity);
+            piece = true;
+        }
+
+
+        if (picUp)
         {
             door.SetActive(false);
         }
-
     }
 
     public void updatePuzzle(int pieceID)
