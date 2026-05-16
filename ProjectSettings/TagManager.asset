@@ -11,6 +11,13 @@ TagManager:
   - Ground
   - Item
   - bottleCap
+<<<<<<< HEAD
+=======
+  - Scale
+  - puzzle piece
+  - trigger
+  - saferoom
+>>>>>>> Alyona
   - Non-Collidable (Player)
   layers:
   - Default

@@ -199,16 +199,16 @@ public class CameraMoveAround : MonoBehaviour
         int dir = 0;
         switch (CamPos)
         {
-            case 0:
+            case 1:
                 dir = 0;
                 break;
-            case 1:
+            case 2:
                 dir = 270;
                 break;
-            case 2:
+            case 3:
                 dir = 180;
                 break;
-            case 3:
+            case 0:
                 dir = 90;
                 break;
         }
