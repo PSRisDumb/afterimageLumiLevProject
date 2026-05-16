@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+
+public class ImageManager : MonoBehaviour
+{
+    public List<Sprite> images;
+    public List<float> waitTimes;
+    public Image currImage;
+    public Animator blink;
+    // Start is called before the first frame update
+    void Start()
+    {
+        StartCoroutine(playIntro());
+    }
+    public IEnumerator playIntro()
+    {
+        for (int  i = 0;  i < images.Count;  i++)
+        {
+            yield return new WaitForSeconds(waitTimes[i]);
+            blink.Play("Empty State");
+            blink.Play("doodledoodle");
+            yield return new WaitForSeconds(0.1156f);
+            currImage.sprite = images[i];
+        }
+    }
+}
