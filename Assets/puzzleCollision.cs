@@ -7,6 +7,8 @@ public class puzzleCollision : MonoBehaviour
     public GameObject GMS;
     public GameObject dialogue;
     public GameObject ghost;
+    public GameObject enemies; // need to access to turn it off 
+    public GameObject Sanity; // to to access to turn it on
     private bool ghostOn = false;
     // Start is called before the first frame update
     void Start()
@@ -42,13 +44,20 @@ public class puzzleCollision : MonoBehaviour
 
         }
 
+        
         if (other.gameObject.tag == "saferoom")
         {
-            dialogue.GetComponent<dialogueManager>().saf2GO = true;
+            //dialogue.GetComponent<dialogueManager>().saf2GO = true;
             ghost.GetComponent<floaterScript>().safeRoom = true;
+            Debug.Log("in safe room");
 
         }
+        else if(other.gameObject.tag != "saferoom")
+        {
+            ghost.GetComponent<floaterScript>().safeRoom = false;
 
+        }
+        
 
     }
 }
