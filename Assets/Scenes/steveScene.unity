@@ -1575,23 +1575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4adcae8831574974daca07d5b7365e2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCanvas: {fileID: 1124004200}
-  handTimer: 0
-  handSpawn: 5
-  handsChance: 70
-  handsPrefabs:
-  - {fileID: 7702818459469516069, guid: 2c2fa9e2b33f0b24c9397585bf0d9fac, type: 3}
-  - {fileID: 4759284970782686932, guid: 60624b6ca8542e842ac71755f825e662, type: 3}
-  - {fileID: 2087775885598966033, guid: 4b463027000c06746bfc8faa0705ba44, type: 3}
-  - {fileID: 8101574749767500028, guid: 507d7de504cfcd04085f671d7bac7075, type: 3}
-  photoTimer: 0
-  photoSpawn: 7
-  photoChance: 60
-  photos:
-  - {fileID: 4777120342673320745, guid: 6677f0eec745c6c4dbbea2a149951eb2, type: 3}
-  - {fileID: 7525417242264057365, guid: 3e35875c2ba13e24697bb83c31aff383, type: 3}
-  - {fileID: 437806317825877330, guid: 3ea43b7d98763114bb16c7e621c5f62c, type: 3}
-  - {fileID: 8883866915595478175, guid: bc0fac5e2195c374ebd23e08e0829fd2, type: 3}
 --- !u!4 &520223074
 Transform:
   m_ObjectHideFlags: 0
@@ -1636,10 +1619,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b438592aca9caf49ae4c8fc6a2232fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sanityDrainTimer: 0
-  sanityDrain: 5
-  sanity: 100
-  sanityBar: {fileID: 695248599}
 --- !u!4 &578078242
 Transform:
   m_ObjectHideFlags: 0
@@ -4046,7 +4025,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.1, y: 1, z: 0}
 --- !u!23 &1737786354
 MeshRenderer:
   m_ObjectHideFlags: 0
