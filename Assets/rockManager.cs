@@ -17,7 +17,7 @@ public class rockManager : MonoBehaviour
     private void FixedUpdate()
     {
         rb.AddForce(boss.fallSpeed * Time.deltaTime, ForceMode.Acceleration);
-        if(transform.position.y < 0)
+        if(transform.position.y < 1)
         {
             Destroy(gameObject);
         }

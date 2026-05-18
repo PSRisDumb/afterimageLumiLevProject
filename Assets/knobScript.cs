@@ -23,7 +23,7 @@ public class knobScript : MonoBehaviour
 
     public bool updateMonitor;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         playerScript = GameObject.Find("Player").GetComponent<CameraMoveAround>();
         sineWave = GameObject.Find("sineWave").GetComponent<LineRenderer>();
@@ -34,23 +34,24 @@ public class knobScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        //heartMonitor.GetComponent<TextMeshPro>().SetText($"Heart rate: {Mathf.FloorToInt(heartRate)} Amp: {Mathf.FloorToInt(height)}");
-        for (int i = 0;  i<points; i++)
+        for (int i = 0;  i < points; i++)
         {
             float x = (i / (float)points) * length;
             float y = Mathf.Sin(x + Time.time * heartRate) * height;
             sineWave.SetPosition(i, new Vector3(x,y,0));
         }
-        if (isInteracting) 
+        
+        if (isInteracting)
         {
             if (Input.GetKey(KeyCode.A))
             {
                 if (isRateMonitor)
                 {
                     heartRate -= rate * Time.deltaTime;
-                } else
+                }
+                else
                 {
                     height -= amp * Time.deltaTime;
                 }
@@ -60,7 +61,8 @@ public class knobScript : MonoBehaviour
                 if (isRateMonitor)
                 {
                     heartRate += rate * Time.deltaTime;
-                } else
+                }
+                else
                 {
                     height += amp * Time.deltaTime;
                 }
@@ -70,33 +72,19 @@ public class knobScript : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F) && canInteract && !isInteracting)
+        if (Input.GetKeyDown(KeyCode.F) && canInteract && !isInteracting)
         {
             playerScript.speed = 0;
             isInteracting = true;
-        } else if(Input.GetKeyDown(KeyCode.F) && canInteract && isInteracting)
+            
+        }
+        else if (Input.GetKeyDown(KeyCode.F) && canInteract && isInteracting)
         {
             playerScript.speed = 10;
             isInteracting = false;
         }
         sineWave.positionCount = points;
     }
-
-    //private void OnTriggerStay(Collider collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Player"))
-    //    {
-    //        if (isRateMonitor)
-    //        {
-    //            heartRate += rate * Time.fixedDeltaTime;
-    //        }
-    //        else
-    //        {
-    //            height += amp * Time.fixedDeltaTime;
-    //        }
-    //    }
-
-    //}
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Player"))
