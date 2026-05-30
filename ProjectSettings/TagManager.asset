@@ -13,6 +13,7 @@ TagManager:
   - bottleCap
   - Scale
   - puzzlePiece
+  - Non-Collidable (Player)
   layers:
   - Default
   - TransparentFX

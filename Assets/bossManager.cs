@@ -8,7 +8,11 @@ using UnityEngine.UIElements;
 public class bossManager : MonoBehaviour
 {
     public GameObject roof;
+    public GameObject playerObj;
+
     public Transform player;
+
+    public PlayerMovement playerScript;
 
     public Vector3 fallSpeed;
 
@@ -32,6 +36,12 @@ public class bossManager : MonoBehaviour
     {
         Instantiate(roof, new Vector3(x,  y + offset, z), Quaternion.identity);
     }
+
+    public void camAttack()
+    {
+
+    }
+
     public IEnumerator roofFallingRoutine()
     {
         yield return new WaitForSeconds(5);
@@ -43,5 +53,10 @@ public class bossManager : MonoBehaviour
         yield return new WaitForSeconds(2);
         roofFalling(UnityEngine.Random.Range(-40, 40), 0, UnityEngine.Random.Range(-40, 40));
         StartCoroutine(randomRoofFallingRoutine());
+    }
+    public IEnumerator cameraSwitch()
+    {
+        yield return new WaitForSeconds(10);
+
     }
 }
