@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.UI;
+using UnityEngine.UI;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -26,7 +26,6 @@ public class EnemyManager : MonoBehaviour
     public float floaterSpawn;
     public int floaterChance;
     public GameObject player;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -36,88 +35,91 @@ public class EnemyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //hand spawn stuff 
-        if (activateH)
+        if (player.GetComponent<puzzleCollision>().safeRoom == false)
         {
-            handTimer += Time.deltaTime;
-            if (handTimer >= handSpawn)
+            //hand spawn stuff 
+            if (activateH)
             {
-                // Debug.Log("hands chance...");
-                int HChance = Random.Range(0, 100);
-                // Debug.Log(HChance);
-                if (handsChance >= HChance)
+                handTimer += Time.deltaTime;
+                if (handTimer >= handSpawn)
                 {
-
-                    for (int i = 0; i < handsPrefabs.Count; i++)
+                    // Debug.Log("hands chance...");
+                    int HChance = Random.Range(0, 100);
+                    // Debug.Log(HChance);
+                    if (handsChance >= HChance)
                     {
-                        //for spawning the hands as a child to the canvas FIX
-                        RectTransform hand = Instantiate(handsPrefabs[i], enemyCanvas.transform).GetComponent<RectTransform>();
+
+                        for (int i = 0; i < handsPrefabs.Count; i++)
+                        {
+                            //for spawning the hands as a child to the canvas FIX
+                            RectTransform hand = Instantiate(handsPrefabs[i], enemyCanvas.transform).GetComponent<RectTransform>();
+
+                        }
+
+
+                        HChance = 0;
+                        // Debug.Log("hands chance sucsess: " + HChance + ">=" + handsChance);
+                    }
+                    else
+                    {
+                        //Debug.Log("hands chance fail: " + HChance + " not >=" + handsChance);
 
                     }
-
-
-                    HChance = 0;
-                    // Debug.Log("hands chance sucsess: " + HChance + ">=" + handsChance);
+                    handTimer = 0;
                 }
-                else
-                {
-                    //Debug.Log("hands chance fail: " + HChance + " not >=" + handsChance);
-
-                }
-                handTimer = 0;
             }
-        }
 
-        //photo spawn stuff
-        if (activateP)
-        {
-            photoTimer += Time.deltaTime;
-            if (photoTimer >= photoSpawn)
+            //photo spawn stuff
+            if (activateP)
             {
-                // Debug.Log("photo chance...");
-                int PChance = Random.Range(0, 100);
-                //Debug.Log(PChance);
-                if (photoChance >= PChance)
+                photoTimer += Time.deltaTime;
+                if (photoTimer >= photoSpawn)
                 {
-                    int photo = Random.Range(0, photos.Count);
-                    RectTransform pos = Instantiate(photos[photo], enemyCanvas.transform).GetComponent<RectTransform>();
-                    pos.anchoredPosition = new Vector2(Random.Range(-500f, 500f), Random.Range(-300f, 300f));
+                    // Debug.Log("photo chance...");
+                    int PChance = Random.Range(0, 100);
+                    //Debug.Log(PChance);
+                    if (photoChance >= PChance)
+                    {
+                        int photo = Random.Range(0, photos.Count);
+                        RectTransform pos = Instantiate(photos[photo], enemyCanvas.transform).GetComponent<RectTransform>();
+                        pos.anchoredPosition = new Vector2(Random.Range(-500f, 500f), Random.Range(-300f, 300f));
 
-                    PChance = 0;
-                    // Debug.Log("hands chance sucsess: " + PChance + ">=" + photoChance);
-                }
-                else
-                {
-                    // Debug.Log("hands chance fail: " + PChance + " not >=" + photoChance);
+                        PChance = 0;
+                        // Debug.Log("hands chance sucsess: " + PChance + ">=" + photoChance);
+                    }
+                    else
+                    {
+                        // Debug.Log("hands chance fail: " + PChance + " not >=" + photoChance);
 
+                    }
+                    photoTimer = 0;
                 }
-                photoTimer = 0;
             }
-        }
 
-        //spawns floaters
-        if (activateF)
-        {
-            floaterTimer += Time.deltaTime;
-            if (floaterTimer >= floaterSpawn)
+            //spawns floaters
+            if (activateF)
             {
-                //Debug.Log("floater chance ...");
-                int fChance = Random.Range(0, 100);
-                //Debug.Log(fChance);
-                if (floaterChance >= fChance)
+                floaterTimer += Time.deltaTime;
+                if (floaterTimer >= floaterSpawn)
                 {
-                    //MAKE SPAWN FOR FLOATER, need to figurse out how to make it spawn near the player
+                    //Debug.Log("floater chance ...");
+                    int fChance = Random.Range(0, 100);
+                    //Debug.Log(fChance);
+                    if (floaterChance >= fChance)
+                    {
+                        //MAKE SPAWN FOR FLOATER, need to figurse out how to make it spawn near the player
 
-                    int num = Random.Range(0, 2);
-                    float xPos = player.transform.position.x - Random.Range(-spawnRange, spawnRange);
-                    float zPos = player.transform.position.z - Random.Range(-spawnRange, spawnRange);
-                    Instantiate(floater[num], new Vector3(xPos, player.transform.position.y, zPos), Quaternion.identity);
-                    fChance = 0;
+                        int num = Random.Range(0, 2);
+                        float xPos = player.transform.position.x - Random.Range(-spawnRange, spawnRange);
+                        float zPos = player.transform.position.z - Random.Range(-spawnRange, spawnRange);
+                        Instantiate(floater[num], new Vector3(xPos, player.transform.position.y, zPos), Quaternion.identity);
+                        fChance = 0;
+                    }
+                    floaterTimer = 0;
                 }
-                floaterTimer = 0;
-            }  
+            }
         }
     }
+
 }
 

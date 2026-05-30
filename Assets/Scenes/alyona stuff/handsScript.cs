@@ -12,6 +12,8 @@ public class handsScript : MonoBehaviour
     public float sanityDrainT;
     public float sanityDrain;
 
+    public GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +40,11 @@ public class handsScript : MonoBehaviour
 
             
  
+        }
+
+        if(player.GetComponent<puzzleCollision>().safeRoom == true)
+        {
+            Destroy(gameObject);
         }
 
 

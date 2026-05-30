@@ -221,7 +221,7 @@ public class CameraMoveAround : MonoBehaviour
         Vector3 Campos = Cam.transform.position;
         Vector3 direction = transform.position - Campos;
         float distance = Vector3.Distance(transform.position, Campos);
-        RaycastHit[] hits = Physics.RaycastAll(Campos, direction, distance);
+        RaycastHit[] hits = Physics.RaycastAll(Campos, direction, distance, flashlightLayerMask);
 
         List<GameObject> doNotRemove = new List<GameObject>();
         if (hits.Length > 0 )

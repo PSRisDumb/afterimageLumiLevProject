@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class floaterScript : MonoBehaviour
@@ -13,7 +11,6 @@ public class floaterScript : MonoBehaviour
 
     public float Death; // death timer
 
-    public bool safeRoom = false;
 
     // Start is called before the first frame update
     void Start()
@@ -37,21 +34,44 @@ public class floaterScript : MonoBehaviour
         float ghostFloat = Mathf.PingPong(Time.time * 0.1f, 0.1f)-0.05f;
         transform.position = baseMovement + new Vector3(0, ghostFloat, 0);
 
-        if(safeRoom == true)
+        if(player.GetComponent<puzzleCollision>(). safeRoom == true)
         {
             Destroy(gameObject);
         }
+
+
+        if (player.GetComponent<CameraMoveAround>().CamPos == 0)
+        {
+            transform.Rotate(new Vector3(0, 0, 0));
+            Debug.Log("0");
+        }
+        if (player.GetComponent<CameraMoveAround>().CamPos == 1)
+        {
+            transform.Rotate(new Vector3(0, 270, 0));
+            Debug.Log("1");
+        }
+        if (player.GetComponent<CameraMoveAround>().CamPos == 2)
+        {
+            transform.Rotate(new Vector3(0, 180, 0));
+            Debug.Log("2");
+        }
+        if (player.GetComponent<CameraMoveAround>().CamPos == 3)
+        {
+            transform.Rotate(new Vector3(0, 90, 0));
+            Debug.Log("3");
+        }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             Debug.Log("hit");
             sanity -= sanityDrain;
             sanityScr.GetComponent<sanityManager>().sanity -= sanityDrain;
             Destroy(gameObject);
         }
+
     }
  
    
