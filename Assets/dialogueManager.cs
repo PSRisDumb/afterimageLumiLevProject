@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -8,6 +7,9 @@ public class dialogueManager : MonoBehaviour
 {
     public Image characterBase;
     public Sprite[] characters;
+
+    public CameraMoveAround PlayerMovement;
+    public float DialougeSpeed;
 
     private string[] currentLines;
     private int[] currentSpeaker;
@@ -40,6 +42,7 @@ public class dialogueManager : MonoBehaviour
     private float lineChange;
 
     public TextMeshProUGUI explanation;
+    private bool TutOver;
     private bool expl1; // explains how to move and that no sanity will be lost at that pt
     private bool expl2; // explains how to look around, how to pick up smth, and what you need to do
     private float explT; //timer for the explinations to run
@@ -48,6 +51,7 @@ public class dialogueManager : MonoBehaviour
     {
         //begin the game in the dark with tut lines playing
         lightSource.SetActive(false);
+        PlayerMovement.enabled = false;
         currentLines = tutorialLines1;
         currentSpeaker = tut1Speaker;
         dialogueText.text = string.Empty;
@@ -66,7 +70,6 @@ public class dialogueManager : MonoBehaviour
             if(dialogueText.text == currentLines[index])
             {
                 nextLine(currentLines, currentSpeaker);
-
             }
             else
             {
@@ -81,7 +84,8 @@ public class dialogueManager : MonoBehaviour
             if (explT >= 3)
             {
                 explanation.text = "WASD to walk";
-
+                PlayerMovement.enabled = true;
+                PlayerMovement.speed = DialougeSpeed;
             }
             if(explT >= 5)
             {
@@ -97,15 +101,14 @@ public class dialogueManager : MonoBehaviour
                     tut2GO = true;
                     expl1 = false;
              }
-            
         }
-
         if (tut2GO) {
             lineChange += Time.deltaTime;
 
             if (lineChange >= 3f)
             {
                 lightSource.SetActive(true);
+                PlayerMovement.speed = 10;
                 //flashlight.SetActive(true);
                 currentLines = tutorialLines2;
                 currentSpeaker = tut2Speaker;
@@ -138,6 +141,7 @@ public class dialogueManager : MonoBehaviour
             currentSpeaker = saf2speaker;
             StartDialogue(currentLines, currentSpeaker);
             saf2GO = false;
+            TutOver = true;
         }
     }
 

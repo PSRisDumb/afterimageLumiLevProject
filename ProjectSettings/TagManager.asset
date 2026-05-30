@@ -4,30 +4,26 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Northern
-  - Western
   - Eastern
-  - Southern
   - Ground
-  - Item
-  - bottleCap
-<<<<<<< HEAD
-=======
-  - Scale
-  - puzzle piece
+  - Western
+  - Northern
+  - Southern
   - trigger
-  - saferoom
->>>>>>> Alyona
+  - puzzle piece
+  - bottleCap
+  - puzzlePiece
+  - Scale
   - Non-Collidable (Player)
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Player
+  - 
   - Water
   - UI
-  - Items
-  - Non-Collidable (Player)
+  - 
+  - 
   - 
   - 
   - 

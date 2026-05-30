@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ImageManager : MonoBehaviour
 {
@@ -25,5 +25,9 @@ public class ImageManager : MonoBehaviour
             yield return new WaitForSeconds(0.1156f);
             currImage.sprite = images[i];
         }
+        blink.Play("Empty State");
+        blink.Play("doodledoodle");
+        yield return new WaitForSeconds(0.1156f);
+        SceneManager.LoadScene(2);
     }
 }
