@@ -23,6 +23,7 @@ public class GMScript : MonoBehaviour
             hasPiece[i] = false;
         }
     }
+
     void Start()
     {
         weight = 0;

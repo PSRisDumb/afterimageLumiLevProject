@@ -4,26 +4,25 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Eastern
-  - Ground
-  - Western
   - Northern
+  - Western
+  - Eastern
   - Southern
-  - trigger
-  - puzzle piece
+  - Ground
+  - Item
   - bottleCap
-  - puzzlePiece
   - Scale
+  - puzzlePiece
   - Non-Collidable (Player)
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
+  - Items
+  - Ground
   - 
   - 
   - 
