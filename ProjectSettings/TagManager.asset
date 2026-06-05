@@ -14,6 +14,11 @@ TagManager:
   - Scale
   - puzzlePiece
   - Non-Collidable (Player)
+  - saferoom
+  - trigger
+  - puzzle piece
+  - floater
+  - SoccerBall
   layers:
   - Default
   - TransparentFX
@@ -23,7 +28,7 @@ TagManager:
   - UI
   - Items
   - Ground
-  - 
+  - Pushable
   - 
   - 
   - 

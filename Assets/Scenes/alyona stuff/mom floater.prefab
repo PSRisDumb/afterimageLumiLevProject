@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6324810244719482581}
   m_Layer: 0
   m_Name: mom floater
-  m_TagString: Untagged
+  m_TagString: floater
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,6 +124,8 @@ MonoBehaviour:
   spd: 3
   sanityScr: {fileID: 0}
   Death: 0
+  puzzleCollision: {fileID: 0}
+  floaterSpawn: {fileID: 8300000, guid: 4de93754ddc0c5743a70f6e03f0ef4b1, type: 3}
 --- !u!1 &3799647303274939601
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,6 +207,6 @@ SpriteRenderer:
   m_Size: {x: 1.83, y: 4.47}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

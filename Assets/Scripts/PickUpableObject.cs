@@ -15,9 +15,13 @@ public class PickUpableObject : MonoBehaviour
 
    public EaseType easetype;
 
+    public AudioClip pickUpSound;
+    public puzzleCollision puzzleCollision;
+
     private void Start()
     {
         playerGameObject = GameObject.Find("Player");
+        puzzleCollision = playerGameObject.GetComponent<puzzleCollision>();
     }
     private void Update()
     {
@@ -31,6 +35,7 @@ public class PickUpableObject : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
+                    playerGameObject.GetComponent<CameraMoveAround>().SFXAudioSource.PlayOneShot(pickUpSound);
                     cameraMove.NuhUhDrop = true;
                     cameraMove.HoldingObjectBool = true;
                     Rb.freezeRotation = true;

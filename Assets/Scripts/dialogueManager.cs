@@ -87,7 +87,7 @@ public class dialogueManager : MonoBehaviour
                 PlayerMovement.enabled = true;
                 PlayerMovement.speed = DialougeSpeed;
             }
-            if(explT >= 5)
+            if (explT >= 5)
             {
                 explanation.text = "Q & E to look around";
             }
@@ -103,13 +103,15 @@ public class dialogueManager : MonoBehaviour
              }
         }
         if (tut2GO) {
-            puzzleCollision.AS.PlayOneShot(puzzleCollision.normalAmbience);
+            puzzleCollision.backGroundMusicAudioSource.clip = puzzleCollision.normalAmbience;
+            puzzleCollision.backGroundMusicAudioSource.Play();
             lineChange += Time.deltaTime;
 
             if (lineChange >= 3f)
             {
                 lightSource.SetActive(true);
                 PlayerMovement.speed = 10;
+                PlayerMovement.footStepSound.pitch = 1;
                 //flashlight.SetActive(true);
                 currentLines = tutorialLines2;
                 currentSpeaker = tut2Speaker;

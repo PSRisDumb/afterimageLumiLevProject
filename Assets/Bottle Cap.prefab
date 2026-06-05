@@ -453,6 +453,8 @@ MonoBehaviour:
   travelTime: 1
   InteractDistance: 5
   easetype: 0
+  pickUpSound: {fileID: 8300000, guid: acbb073d93c1f614ea762ac84cf5ea67, type: 3}
+  puzzleCollision: {fileID: 0}
 --- !u!65 &7166913405142590339
 BoxCollider:
   m_ObjectHideFlags: 0

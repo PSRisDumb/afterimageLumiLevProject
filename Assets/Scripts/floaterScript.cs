@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class floaterScript : MonoBehaviour
@@ -12,12 +13,21 @@ public class floaterScript : MonoBehaviour
     public float Death; // death timer
 
     private int rotate;
+    public puzzleCollision puzzleCollision;
+    public AudioClip floaterSpawn;
 
     // Start is called before the first frame update
     void Start()
     {
         sanityScr = GameObject.Find("sanity manager");
         player = GameObject.Find("Player");
+        puzzleCollision = player.GetComponent<puzzleCollision>();
+        if (puzzleCollision.backGroundMusicAudioSource.clip != puzzleCollision.chaseTheme)
+        {
+            puzzleCollision.backGroundMusicAudioSource.clip = puzzleCollision.chaseTheme;
+            puzzleCollision.backGroundMusicAudioSource.Play();
+        }
+        player.GetComponent<CameraMoveAround>().SFXAudioSource.PlayOneShot(floaterSpawn);
     }
 
     // Update is called once per frame
@@ -34,7 +44,7 @@ public class floaterScript : MonoBehaviour
         float ghostFloat = Mathf.PingPong(Time.time * 0.1f, 0.1f)-0.05f;
         transform.position = baseMovement + new Vector3(0, ghostFloat, 0);
 
-        if(player.GetComponent<puzzleCollision>(). safeRoom == true)
+        if(player.GetComponent<puzzleCollision>().safeRoom == true)
         {
             Destroy(gameObject);
         }
@@ -67,6 +77,13 @@ public class floaterScript : MonoBehaviour
             Debug.Log("hit");
             sanity -= sanityDrain;
             sanityScr.GetComponent<sanityManager>().sanity -= sanityDrain;
+            // --- music stuff
+            GameObject[] floaters = GameObject.FindGameObjectsWithTag("floater");
+            if (floaters.Length < 2)
+            {
+                puzzleCollision.backGroundMusicAudioSource.clip = puzzleCollision.normalAmbience;
+                puzzleCollision.backGroundMusicAudioSource.Play();
+            }
             Destroy(gameObject);
         }
 

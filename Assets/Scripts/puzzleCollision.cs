@@ -13,16 +13,17 @@ public class puzzleCollision : MonoBehaviour
     private bool ghostOn = false;
     private bool firstTimeLeavingSafeRoom = false;
     public GameStateManager stateManager;
-    public AudioSource AS;
+    public AudioSource backGroundMusicAudioSource;
     public AudioClip safeRoomMusic;
     public AudioClip normalAmbience;
+    public AudioClip chaseTheme;
 
     public bool safeRoom;
     // Start is called before the first frame update
     void Start()
     {
         safeRoom = false; 
-        AS = GetComponent<AudioSource>();
+        backGroundMusicAudioSource = GetComponent<AudioSource>();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -51,7 +52,8 @@ public class puzzleCollision : MonoBehaviour
             //dialogue.GetComponent<dialogueManager>().saf2GO = true;
             safeRoom = true;
             Debug.Log("in safe room");
-            AS.PlayOneShot(safeRoomMusic);
+            backGroundMusicAudioSource.clip = safeRoomMusic;
+            backGroundMusicAudioSource.Play();
         }
         
 
@@ -67,7 +69,8 @@ public class puzzleCollision : MonoBehaviour
                 firstTimeLeavingSafeRoom = true;
                 stateManager.ProgressState();
             }
-            AS.PlayOneShot(normalAmbience);
+            backGroundMusicAudioSource.clip = normalAmbience;
+            backGroundMusicAudioSource.Play();
         }
     }
 }

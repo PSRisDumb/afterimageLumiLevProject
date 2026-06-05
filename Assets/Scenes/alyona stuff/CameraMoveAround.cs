@@ -46,6 +46,9 @@ public class CameraMoveAround : MonoBehaviour
 
     public UnityEvent<int> OnCameraMove;
 
+    public AudioSource footStepSound;
+    public AudioSource SFXAudioSource;
+
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -85,8 +88,13 @@ public class CameraMoveAround : MonoBehaviour
             bool hasHit = Physics.CapsuleCast(topCircle, bottomCircle, radius,
                                               movement.normalized, movement.magnitude, playerCollidableLayers);
             if (!hasHit)
+            {
                 rb.MovePosition(rb.position + movement);
+                footStepSound.enabled = true;
+            }
         }
+        else
+            footStepSound.enabled = false;
 
         MakeInTheWayObjectsSeeThrough();
     }

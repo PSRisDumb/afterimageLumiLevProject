@@ -55,7 +55,6 @@ public class handsScript : MonoBehaviour
     public void Die()
     {
         Destroy(gameObject);
-        Debug.Log("die");
     }
 
     public void Clicked()

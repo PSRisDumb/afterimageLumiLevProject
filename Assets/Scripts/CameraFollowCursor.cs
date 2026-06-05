@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class CameraFollowCursor : MonoBehaviour
 {
@@ -50,5 +51,19 @@ public class CameraFollowCursor : MonoBehaviour
     public void startGame()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void ExitGame()
+    {
+
+    }
+    public GameObject settingsPanel;
+    public void SettingsButton()
+    {
+        settingsPanel.SetActive(true);
+    }
+    public void SettingsLeave()
+    {
+        settingsPanel.SetActive(false);
     }
 }
