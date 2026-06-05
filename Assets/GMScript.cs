@@ -6,6 +6,7 @@ public class GMScript : MonoBehaviour
 {
     public GameObject door;
     public int weight;
+    public int puzzlePieceCount = 3;
 
     public GameObject[] paintingPuzzle;
     public bool[] hasPiece = new bool[8];
@@ -13,10 +14,12 @@ public class GMScript : MonoBehaviour
     // Start is called before the first frame update
 
     private void Awake()
-    {
-        for (int i = 0; i < 8; i++) {
+    {        
+        paintingPuzzle = new GameObject[puzzlePieceCount];
+        for (int i = 0; i < puzzlePieceCount; i++) {
             hasPiece[i] = false;
         }
+
     }
 
     void Start()
@@ -37,7 +40,7 @@ public class GMScript : MonoBehaviour
     public void updatePuzzle(int pieceID)
     {
         hasPiece[pieceID] = true;
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < puzzlePieceCount; i++)
         {
             if (hasPiece[i])
             {
