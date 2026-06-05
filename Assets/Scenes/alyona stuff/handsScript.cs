@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,9 +13,12 @@ public class handsScript : MonoBehaviour
     public float sanityDrainT;
     public float sanityDrain;
 
+    public GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player");
         sanityScr = GameObject.Find("sanity manager");
         hand = GetComponent<RectTransform>();
     }
@@ -40,6 +44,11 @@ public class handsScript : MonoBehaviour
  
         }
 
+        if(player.GetComponent<puzzleCollision>().safeRoom == true)
+        {
+            Destroy(gameObject);
+        }
+
 
     }
 
@@ -47,5 +56,10 @@ public class handsScript : MonoBehaviour
     {
         Destroy(gameObject);
         Debug.Log("die");
+    }
+
+    public void Clicked()
+    {
+        Debug.Log("clicked");
     }
 }

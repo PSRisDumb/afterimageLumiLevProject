@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +12,12 @@ public class sanityManager : MonoBehaviour
 
     public bool sanityOn;
     public Slider sanityBar;
+
+    public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         sanity = 100;
-        sanityOn = false;
 
     }
 
@@ -30,19 +32,40 @@ public class sanityManager : MonoBehaviour
 
         if (sanityOn)
         {
-            sanityBar.maxValue = 100;
-            sanityBar.minValue = 0;
-            sanityBar.value = sanity;
+  
+                sanityBar.maxValue = 100;
+                sanityBar.minValue = 0;
+                sanityBar.value = sanity;
 
-            //sanity loss
-            if (sanity >= 0)
-            {
-                sanityDrainTimer += Time.deltaTime;
-                if (sanityDrainTimer >= sanityDrain)
+          if(player.GetComponent<puzzleCollision>().safeRoom == false){
+                //sanity loss
+                if (sanity >= 0)
                 {
-                    sanity -= 1;
-                    sanityDrainTimer = 0;
+                    sanityDrainTimer += Time.deltaTime;
+                    if (sanityDrainTimer >= sanityDrain)
+                    {
+                        sanity -= 1;
+                        sanityDrainTimer = 0;
+                    }
                 }
+            }
+            //sanity gain
+            else
+            {
+                if(sanity >= 0 && sanity <= 100)
+                {
+                    sanityDrainTimer += Time.deltaTime;
+                    if (sanityDrainTimer >= sanityDrain)
+                    {
+                        sanity += 5;
+                        sanityDrainTimer = 0;
+                    }
+                }
+            }
+            //lose con
+            if(sanity <= 0)
+            {
+                Debug.Log("u lose bozo :P");
             }
         }
     }

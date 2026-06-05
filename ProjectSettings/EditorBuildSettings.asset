@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: c32ac6479ae2d9a47959cfe09a7935b6
   - enabled: 1
-    path: Assets/Intro Cutscene.unity
+    path: Assets/Scripts/Intro Cutscene.unity
     guid: eef20225b3d38794ea98865429db4d01
   - enabled: 1
     path: Assets/Scenes/alyonas scene.unity
