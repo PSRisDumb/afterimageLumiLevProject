@@ -11786,16 +11786,16 @@ MonoBehaviour:
   safeRoomLines1:
   - 'Wally: The heck is that'
   - "Jerry: That\u2019s just one of the residents here, they\u2019re not too friendly
-    though\u2026"
+    though\u2026 best to try to avoid them..."
   saf1speaker: 0100000000000000
   saf1GO: 0
   safeRoomLines2:
-  - 'Wally: Did you just try to kill me??'
-  - 'Jerry:  Nope, but hey look where we are a safe room, as long as your in here
-    your sanity will be replenished'
-  - 'Wally: Sanity?'
-  - 'Jerry: Yup, just keep your chill and no more spooky ghosts will come after you'
-  - 'jerry: Ho, Ho; Now just find the rest!!'
+  - 'Wally: so... what is that bar in the top left?'
+  - 'Jerry: that is your sanity right not. it lowers when you get hit by one of the
+    ghosts.'
+  - 'Wally: Sanity? well, how can I get my sanity back?'
+  - 'Jerry:  Just spend some time in these saferooms it will all be fine'
+  - 'jerry: Ho, Ho; Now just find the rest of the puzzle pices!!'
   saf2speaker: 0100000000000000010000000000000000000000
   saf2GO: 0
   textSpd: 0.03

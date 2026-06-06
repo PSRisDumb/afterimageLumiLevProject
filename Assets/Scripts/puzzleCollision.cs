@@ -17,6 +17,7 @@ public class puzzleCollision : MonoBehaviour
     public AudioClip chaseTheme;
 
     public bool safeRoom;
+    public bool safeRoomFst = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +48,15 @@ public class puzzleCollision : MonoBehaviour
         
         if (other.gameObject.tag == "saferoom")
         {
-            //dialogue.GetComponent<dialogueManager>().saf2GO = true;
+
+            if (safeRoomFst == true)
+            {
+                dialogue.GetComponent<dialogueManager>().saf2GO = true;
+                safeRoomFst = false;
+
+            }
+            
+
             safeRoom = true;
             Debug.Log("in safe room");
             backGroundMusicAudioSource.clip = safeRoomMusic;
