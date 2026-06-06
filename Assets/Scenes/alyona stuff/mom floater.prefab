@@ -124,6 +124,8 @@ MonoBehaviour:
   spd: 3
   sanityScr: {fileID: 0}
   Death: 0
+  puzzleCollision: {fileID: 0}
+  floaterSpawn: {fileID: 8300000, guid: 4de93754ddc0c5743a70f6e03f0ef4b1, type: 3}
 --- !u!1 &3799647303274939601
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +199,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6eeaa2404043c9c489a0b186fa23fd24, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f733427abdf654131a7e674b0ffb82ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

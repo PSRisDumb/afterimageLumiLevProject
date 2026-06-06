@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class CameraMoveAround : MonoBehaviour
 {
-    //CameraMoveAround Script V2 (4/17)
+    //CameraMoveAround Script V3 (6/4)
 
     public GameObject CamerasHolder; //Parent of Camera AND positions
 
@@ -45,6 +45,9 @@ public class CameraMoveAround : MonoBehaviour
     public float ThrowPower;
 
     public UnityEvent<int> OnCameraMove;
+
+    public AudioSource footStepSound;
+    public AudioSource SFXAudioSource;
 
     void Start()
     {
@@ -85,8 +88,13 @@ public class CameraMoveAround : MonoBehaviour
             bool hasHit = Physics.CapsuleCast(topCircle, bottomCircle, radius,
                                               movement.normalized, movement.magnitude, playerCollidableLayers);
             if (!hasHit)
+            {
                 rb.MovePosition(rb.position + movement);
+                footStepSound.enabled = true;
+            }
         }
+        else
+            footStepSound.enabled = false;
 
         MakeInTheWayObjectsSeeThrough();
     }
@@ -164,6 +172,7 @@ public class CameraMoveAround : MonoBehaviour
     public RectTransform jerryPointerRectTransform;
     public float spinRate;
     public bool canBlink = true;
+    public AudioClip blinkSound;
     public IEnumerator CameraMovement(bool isLeft)
     {
         canBlink = false;
@@ -193,22 +202,23 @@ public class CameraMoveAround : MonoBehaviour
         blink.Play("Empty State");
         blink.Play("doodledoodle");
         yield return new WaitForSeconds(0.1156f);
+        SFXAudioSource.PlayOneShot(blinkSound);
         Cam.transform.position = CamList[CamPos].transform.position;
         Cam.transform.rotation = CamList[CamPos].transform.rotation;
         MakeInTheWayObjectsSeeThrough();
         int dir = 0;
         switch (CamPos)
         {
-            case 0:
+            case 1:
                 dir = 0;
                 break;
-            case 1:
+            case 2:
                 dir = 270;
                 break;
-            case 2:
+            case 3:
                 dir = 180;
                 break;
-            case 3:
+            case 0:
                 dir = 90;
                 break;
         }

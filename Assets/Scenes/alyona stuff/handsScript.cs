@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class handsScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player");
         sanityScr = GameObject.Find("sanity manager");
         hand = GetComponent<RectTransform>();
     }
@@ -53,6 +55,10 @@ public class handsScript : MonoBehaviour
     public void Die()
     {
         Destroy(gameObject);
-        Debug.Log("die");
+    }
+
+    public void Clicked()
+    {
+        Debug.Log("clicked");
     }
 }

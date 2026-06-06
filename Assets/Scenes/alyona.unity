@@ -323,7 +323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2087,14 +2087,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4adcae8831574974daca07d5b7365e2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCanvas: {fileID: 0}
+  enemyCanvas: {fileID: 651149598}
   activateH: 1
   handSpawn: 5
-  handsChance: 0
+  handsChance: 100
   handsPrefabs:
   - {fileID: 7702818459469516069, guid: 2c2fa9e2b33f0b24c9397585bf0d9fac, type: 3}
   - {fileID: 4759284970782686932, guid: 60624b6ca8542e842ac71755f825e662, type: 3}
-  - {fileID: 4759284970782686932, guid: 60624b6ca8542e842ac71755f825e662, type: 3}
+  - {fileID: 2087775885598966033, guid: 4b463027000c06746bfc8faa0705ba44, type: 3}
   - {fileID: 8101574749767500028, guid: 507d7de504cfcd04085f671d7bac7075, type: 3}
   activateP: 0
   photoSpawn: 5
@@ -2104,7 +2104,7 @@ MonoBehaviour:
   - {fileID: 7525417242264057365, guid: 3e35875c2ba13e24697bb83c31aff383, type: 3}
   - {fileID: 437806317825877330, guid: 3ea43b7d98763114bb16c7e621c5f62c, type: 3}
   - {fileID: 8883866915595478175, guid: bc0fac5e2195c374ebd23e08e0829fd2, type: 3}
-  activateF: 1
+  activateF: 0
   floater:
   - {fileID: 3564579166612853213, guid: a6df39f3cd7b1f945b3b45bbc6ed2ae0, type: 3}
   - {fileID: 2252346918438658109, guid: 099d10b110dc96b43a8cefe39ac1ee30, type: 3}
@@ -2623,8 +2623,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sanityDrain: 5
   sanity: 100
-  sanityOn: 0
-  sanityBar: {fileID: 0}
+  sanityOn: 1
+  sanityBar: {fileID: 119886351}
+  player: {fileID: 158550007}
 --- !u!4 &2002989610
 Transform:
   m_ObjectHideFlags: 0
@@ -2691,7 +2692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

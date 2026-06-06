@@ -6,9 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/alyona.unity
-    guid: 20662fa2a73d9ce44a35e7e4e7100217
-  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: c32ac6479ae2d9a47959cfe09a7935b6
+  - enabled: 1
+    path: Assets/Scripts/Intro Cutscene.unity
+    guid: eef20225b3d38794ea98865429db4d01
+  - enabled: 1
+    path: Assets/Scenes/alyonas scene.unity
+    guid: 97495e229b3834b708fee1b0cb4c3fe1
+  - enabled: 1
+    path: Assets/Scenes/bossScene.unity
+    guid: d0146c59b31e48641bbbc51ccf4ed436
   m_configObjects: {}

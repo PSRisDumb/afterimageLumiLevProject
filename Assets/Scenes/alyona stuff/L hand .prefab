@@ -151,3 +151,4 @@ MonoBehaviour:
   sanityScr: {fileID: 0}
   sanityDrainT: 0
   sanityDrain: 4
+  player: {fileID: 0}
