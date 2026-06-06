@@ -15,6 +15,7 @@ public class floaterScript : MonoBehaviour
     private int rotate;
     public puzzleCollision puzzleCollision;
     public AudioClip floaterSpawn;
+    public AudioClip deadbeat;
 
     // Start is called before the first frame update
     void Start()
@@ -83,6 +84,7 @@ public class floaterScript : MonoBehaviour
             {
                 puzzleCollision.backGroundMusicAudioSource.clip = puzzleCollision.normalAmbience;
                 puzzleCollision.backGroundMusicAudioSource.Play();
+                player.GetComponent<CameraMoveAround>().SFXAudioSource.PlayOneShot(deadbeat);
             }
             Destroy(gameObject);
         }

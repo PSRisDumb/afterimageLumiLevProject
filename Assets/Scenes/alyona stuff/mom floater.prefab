@@ -126,6 +126,7 @@ MonoBehaviour:
   Death: 0
   puzzleCollision: {fileID: 0}
   floaterSpawn: {fileID: 8300000, guid: 4de93754ddc0c5743a70f6e03f0ef4b1, type: 3}
+  deadbeat: {fileID: 8300000, guid: 73a5a78ddbac2d247bfe66e257a80639, type: 3}
 --- !u!1 &3799647303274939601
 GameObject:
   m_ObjectHideFlags: 0

@@ -152,21 +152,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   images:
-  - {fileID: 21300000, guid: d45ed07e3d4e14743a70f19fc9c40ada, type: 3}
-  - {fileID: 21300000, guid: 21002275f6a0d8848af7384ef8660627, type: 3}
-  - {fileID: 21300000, guid: bcde3ff302e0da54cbbe13b6e3ad3218, type: 3}
-  - {fileID: 21300000, guid: a26e7853fa19f49488a5e32426ff80af, type: 3}
-  - {fileID: 21300000, guid: e41a1fc2569ca1d479898af357125c63, type: 3}
-  - {fileID: 21300000, guid: 5fb7c02aa9d15c74abfe9f335e4f4e1b, type: 3}
-  - {fileID: 21300000, guid: 5e0a9015530ee584ca5188c2852c6d4c, type: 3}
+  - {fileID: 21300000, guid: 88cbdf1cf68e82c40a2943560ac54011, type: 3}
+  - {fileID: 21300000, guid: f72f9ae02e55ec1479b44e96d6f46e3f, type: 3}
+  - {fileID: 21300000, guid: a124d9111eb81f34d8d1713a05faf332, type: 3}
+  - {fileID: 21300000, guid: 93603dd7ec223524daa2aaf462512ffe, type: 3}
+  - {fileID: 21300000, guid: 0dcfdc55bd53a8046ac4c96dcb6de39b, type: 3}
+  - {fileID: 21300000, guid: 4e5ea97627ed5cf48ab5a928bc64ef4d, type: 3}
+  - {fileID: 21300000, guid: 7a41c3529db52f34a937ae8d1c277ec9, type: 3}
   waitTimes:
   - 0
-  - 3
+  - 2.5
+  - 2.3
+  - 2.3
+  - 2
+  - 2
   - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  audioClips:
+  - {fileID: 8300000, guid: d260cdd0447f03d41bd2bd8a264ffc4a, type: 3}
+  - {fileID: 8300000, guid: 10de29f4417452a4799a6297bbe093d9, type: 3}
+  - {fileID: 8300000, guid: d9a30958b511a1c4c81bf1f4cb825059, type: 3}
+  - {fileID: 8300000, guid: 9a84e94418295394bbe8bde6a52c418c, type: 3}
+  - {fileID: 8300000, guid: c7230d4609866a542a38339e50a51266, type: 3}
+  - {fileID: 8300000, guid: 4b34baaedca84f645bad370a6229431a, type: 3}
+  - {fileID: 8300000, guid: 9fcb93b57b84a7046b7836fca1087239, type: 3}
   currImage: {fileID: 1374567491}
   blink: {fileID: 977139926}
   AS: {fileID: 1203824718}
@@ -566,8 +574,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1203824714}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.000030517578, y: 0.99998474, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
