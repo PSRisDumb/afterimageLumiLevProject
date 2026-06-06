@@ -81,7 +81,7 @@ SpriteRenderer:
   m_Size: {x: 2.23, y: 4.47}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2252346918438658109
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 4625414301325316676}
   m_Layer: 0
   m_Name: teacher floater 1
-  m_TagString: floater
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

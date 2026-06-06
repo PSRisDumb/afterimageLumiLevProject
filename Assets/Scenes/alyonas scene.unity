@@ -8678,6 +8678,7 @@ MonoBehaviour:
   jerryPointerRectTransform: {fileID: 1347021481}
   spinRate: 0.01
   canBlink: 1
+  blinkSound: {fileID: 8300000, guid: 9918a553e7022f145af55ca9a3d8f857, type: 3}
 --- !u!136 &961002837
 CapsuleCollider:
   m_ObjectHideFlags: 0

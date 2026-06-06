@@ -172,6 +172,7 @@ public class CameraMoveAround : MonoBehaviour
     public RectTransform jerryPointerRectTransform;
     public float spinRate;
     public bool canBlink = true;
+    public AudioClip blinkSound;
     public IEnumerator CameraMovement(bool isLeft)
     {
         canBlink = false;
@@ -201,6 +202,7 @@ public class CameraMoveAround : MonoBehaviour
         blink.Play("Empty State");
         blink.Play("doodledoodle");
         yield return new WaitForSeconds(0.1156f);
+        SFXAudioSource.PlayOneShot(blinkSound);
         Cam.transform.position = CamList[CamPos].transform.position;
         Cam.transform.rotation = CamList[CamPos].transform.rotation;
         MakeInTheWayObjectsSeeThrough();
