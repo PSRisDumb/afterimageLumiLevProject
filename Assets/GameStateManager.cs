@@ -15,6 +15,9 @@ public class GameStateManager : MonoBehaviour
 
     public int currStateInt = 1;
 
+    public GameObject ExitDoor;
+    public GameObject ExitLight;
+
     // STATE MANAGER STUFF -----------------------
     public void ProgressState()
     {
@@ -38,7 +41,8 @@ public class GameStateManager : MonoBehaviour
                 break;
             case 4:
                 Destroy(tempPhaseThreeParentObject);
-                //+ Enable exit door
+                Destroy(ExitDoor);
+                ExitLight.SetActive(true);
                 break;
             //State 5&6 r in different scenes so no need to do that now
             default:
