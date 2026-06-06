@@ -6,9 +6,11 @@ public class bossManager : MonoBehaviour
     public GameObject roof;
     public GameObject playerObj;
     public GameObject bossObj;
-    public GameObject rot1;
-    public GameObject rot2;
-    public GameObject rot3;
+    public GameObject bossAttack;
+    public GameObject bossPuzzlePiece;
+    // public GameObject rot1;
+    // public GameObject rot2;
+    // public GameObject rot3;
 
     public Transform player;
 
@@ -25,6 +27,9 @@ public class bossManager : MonoBehaviour
     public float timeOfFlight = 20f;
 
     private float elapsedTime = 0f;
+
+    public int health = 5;
+
     private bool isMoving = false;
     private bool alreadySlowed;
 
@@ -35,10 +40,13 @@ public class bossManager : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<Transform>();
         playerScript = playerObj.GetComponent<CameraMoveAround>();
+        bossObj = GameObject.Find("bossObj");
+        bossAttack = GameObject.Find("bossAttack");
+        bossAttack.SetActive(false);
         StartCoroutine(roofFallingRoutine());
         StartCoroutine(randomRoofFallingRoutine());
         StartCoroutine(cameraSwitch());
-        StartCoroutine(bossAnim());
+        StartCoroutine(spawnPiece());
     }
 
     // Update is called once per frame
@@ -55,6 +63,7 @@ public class bossManager : MonoBehaviour
             if(t >= 1)
             {
                 isMoving = false;
+                bossAttack.SetActive(false);
                 if(bossTarget != null)
                 {
                     if(bossTarget.position == playerScript.CamList[playerScript.CamPos].transform.localPosition && !alreadySlowed)
@@ -65,7 +74,23 @@ public class bossManager : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            if(bossTarget != null)
+                {
+                    if(bossTarget.position == playerScript.CamList[playerScript.CamPos].transform.localPosition && !alreadySlowed)
+                    {
+                        alreadySlowed = true;
+                        StartCoroutine(slowEffect());
+                    }
+                }
+        }
         
+    }
+
+    void LateUpdate()
+    {
+        bossObj.transform.LookAt(Camera.main.transform.position, Vector3.up);
     }
 
     public void roofFalling(float x, float y, float z)
@@ -95,7 +120,9 @@ public class bossManager : MonoBehaviour
     }
     public IEnumerator cameraSwitch()
     { 
-        yield return new WaitForSeconds(11);
+        yield return new WaitForSeconds(10);
+        bossAttack.SetActive(true);
+        yield return new WaitForSeconds(1);
         camAttack();
         StartCoroutine(cameraSwitch());
     }
@@ -107,14 +134,21 @@ public class bossManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         alreadySlowed = false;
     }
-    public IEnumerator bossAnim()
+    public IEnumerator spawnPiece()
     {
-        yield return new WaitForSeconds(.3f);
-        bossObj.transform.rotation.Set(rot1.GetComponent<Transform>().rotation.x, rot1.GetComponent<Transform>().rotation.y, rot1.GetComponent<Transform>().rotation.z, rot1.GetComponent<Transform>().rotation.w);
-        yield return new WaitForSeconds(.3f);
-        bossObj.transform.rotation.Set(rot2.GetComponent<Transform>().rotation.x, rot2.GetComponent<Transform>().rotation.y, rot2.GetComponent<Transform>().rotation.z, rot2.GetComponent<Transform>().rotation.w);
-        yield return new WaitForSeconds(.3f);
-        bossObj.transform.rotation.Set(rot3.GetComponent<Transform>().rotation.x, rot3.GetComponent<Transform>().rotation.y, rot3.GetComponent<Transform>().rotation.z, rot3.GetComponent<Transform>().rotation.w);
-        StartCoroutine(bossAnim());
+        yield return new WaitForSeconds(30);
+        Instantiate(bossPuzzlePiece, new Vector3(Random.Range(-20, 20), 1, Random.Range(-20,20)), Quaternion.identity);
+        StartCoroutine(spawnPiece());
     }
+
+    // public IEnumerator bossAnim()
+    // {
+    //     yield return new WaitForSeconds(.3f);
+    //     bossObj.transform.rotation.Set(rot1.GetComponent<Transform>().rotation.x, rot1.GetComponent<Transform>().rotation.y, rot1.GetComponent<Transform>().rotation.z, rot1.GetComponent<Transform>().rotation.w);
+    //     yield return new WaitForSeconds(.3f);
+    //     bossObj.transform.rotation.Set(rot2.GetComponent<Transform>().rotation.x, rot2.GetComponent<Transform>().rotation.y, rot2.GetComponent<Transform>().rotation.z, rot2.GetComponent<Transform>().rotation.w);
+    //     yield return new WaitForSeconds(.3f);
+    //     bossObj.transform.rotation.Set(rot3.GetComponent<Transform>().rotation.x, rot3.GetComponent<Transform>().rotation.y, rot3.GetComponent<Transform>().rotation.z, rot3.GetComponent<Transform>().rotation.w);
+    //     StartCoroutine(bossAnim());
+    // }
 }
