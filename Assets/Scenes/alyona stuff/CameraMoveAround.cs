@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class CameraMoveAround : MonoBehaviour
 {
-    //CameraMoveAround Script V2 (4/17)
+    //CameraMoveAround Script V3 (6/4)
 
     public GameObject CamerasHolder; //Parent of Camera AND positions
 
@@ -198,8 +198,8 @@ public class CameraMoveAround : MonoBehaviour
                 CamPos++; // Campos + 1
             }
         }
-        //blink.Play("Empty State");
-        //blink.Play("doodledoodle");
+        blink.Play("Empty State");
+        blink.Play("doodledoodle");
         yield return new WaitForSeconds(0.1156f);
         Cam.transform.position = CamList[CamPos].transform.position;
         Cam.transform.rotation = CamList[CamPos].transform.rotation;

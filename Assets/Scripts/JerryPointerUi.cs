@@ -10,14 +10,19 @@ public class JerryPointerUi : MonoBehaviour
     public bool isUsingCustomAnim;
     public EaseType easetype;
     public AnimationCurve customCurve;
-    public void OnCameraMove(int camPos)
+    public CameraMoveAround player;
+    private void Start()
+    {
+        player = GameObject.Find("Player").GetComponent<CameraMoveAround>();
+    }
+    public void OnCameraMove()
     {
         Debug.Log("Spinn");
         if(spinRoutine != null)
         {
             StopCoroutine(spinRoutine);
         }
-        spinRoutine = StartCoroutine(Rotate(camPos));
+        spinRoutine = StartCoroutine(Rotate(player.CamPos));
     }
 
     private IEnumerator Rotate(int camPos)

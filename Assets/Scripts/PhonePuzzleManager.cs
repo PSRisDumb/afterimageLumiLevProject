@@ -24,6 +24,7 @@ public class PhonePuzzleManager : MonoBehaviour
 
     public void Start()
     {
+        player = GameObject.Find("Player");
         AS.PlayOneShot(Ringing);
         display.text = "ENTER A NUMBER";
     }
@@ -41,7 +42,7 @@ public class PhonePuzzleManager : MonoBehaviour
             //Give Puzzle Piece
             display.text = "CORRECT CORRECT CORRECT";
             stateManager.ProgressState();
-            Instantiate(GMS.picPiece3, new Vector3(-24f, 18f, 288f), Quaternion.identity);
+            Instantiate(GMS.picPiece3, new Vector3(-24f, 18f, 260f), Quaternion.identity);
             AS.PlayOneShot(Correct);
             return;
         }
